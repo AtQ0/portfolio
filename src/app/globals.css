@@ -1,26 +1,97 @@
 @import "tailwindcss";
 
+/* ========================
+   0. Custom Fonts
+========================= */
+@font-face {
+  font-family: "ComicNeue";
+  src: url("/fonts/ComicNeue-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SaansVF";
+  src: url("/fonts/Saans-Proportional-VF.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SaansVF";
+  src: url("/fonts/Saans-Italics-VF.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ========================
+   1. Root Variables
+   - Dark theme default
+========================= */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Backgrounds */
+  --bg-black: #000000;
+  --bg-onyx: #111111;
+  --bg-white: #ffffff;
+  --bg-bright-snow: #f6f6f6;
+
+  /* Foregrounds */
+  --fg-white: #ffffff;
+  --fg-gray: #cccccc;
+  --fg-black: #000000;
+
+  /* Accents */
+  --accent-tea-green: #cefdae;
+  --accent-light-coral: #ec8f8c;
+  --accent-brilliant-azure: #3f8ae2;
+
+  /* Active theme colors (dark default) */
+  --active-bg-primary: var(--bg-black);
+  --active-bg-secondary: var(--bg-onyx);
+  --active-fg-primary: var(--fg-white);
+  --active-fg-secondary: var(--fg-gray);
+
+  /* Active font (default SaansVF) */
+  --active-font: "SaansVF", system-ui, sans-serif;
+
+  /* Responsive page gutter */
+  --app-outer-gutter: clamp(24px, -11.897px + 8.974vw, 80px);
 }
 
+/* ========================
+   2. Tailwind / Inline Tokens
+========================= */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg-primary: var(--active-bg-primary);
+  --color-bg-secondary: var(--active-bg-secondary);
+  --color-fg-primary: var(--active-fg-primary);
+  --color-fg-secondary: var(--active-fg-secondary);
+
+  --font-sans: var(--active-font);
 }
 
-@media (prefers-color-scheme: dark) {
+/* ========================
+   3. Light Theme Overrides
+========================= */
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --active-bg-primary: var(--bg-white);
+    --active-bg-secondary: var(--bg-bright-snow);
+    --active-fg-primary: var(--fg-black);
+    --active-fg-secondary: var(--fg-gray);
   }
 }
 
+/* ========================
+   4. Base Styles
+========================= */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg-primary);
+  color: var(--color-fg-primary);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  padding-left: var(--app-outer-gutter);
+  padding-right: var(--app-outer-gutter);
 }
