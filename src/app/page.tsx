@@ -1,7 +1,10 @@
+import Hero from "@/components/sections/Hero";
+import IntroGrid from "@/components/sections/intro-grid/IntroGrid";
 export default function Home() {
   return (
-    <main className="bg-bg-secondary h-screen">
-      <h1>Hello World</h1>
+    <main className="h-screen">
+      <Hero />
+      <IntroGrid />
     </main>
   );
 }
