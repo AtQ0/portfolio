@@ -1,5 +1,16 @@
 import { cn } from "@/lib/utils";
-export default function Hero() {
+import { StoryblokServerComponent, SbBlokData } from "@storyblok/react/rsc";
+
+type HeroBlok = SbBlokData & {
+  title: string;
+  body?: SbBlokData[];
+};
+
+type HeroProps = {
+  blok: HeroBlok;
+};
+
+export default function Hero({ blok }: HeroProps) {
   return (
     <section className="bg-bg-secondary grid w-full lg:grid-cols-2">
       <div className="p-gutter flex h-screen flex-col justify-between bg-amber-500">

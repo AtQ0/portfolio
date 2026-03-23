@@ -1,32 +1,38 @@
+```text
 ┌─────────────────────────────────────────────────────────────────────────┐
-│ page (root story) │
-│ ───────────────── │
-│ blocks[] → ordered stack of block\_\* components │
-│ SEO tab: seo_title | seo_description | seo_image │
+│ page (root story)                                                       │
+│ ────────────────────────────────────────────────────────────────────────│
+│ blocks[] → ordered stack of block\_\* components                        │
+│ SEO tab: seo_title | seo_description | seo_image                        │
 └─────────────────────────────────────────────────────────────────────────┘
 │
 ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
-│ blocks[] (order = section order on the page) │
+│ blocks[] (order = section order on the page)                            │
 └─────────────────────────────────────────────────────────────────────────┘
+```
 
     ┌──────────────────────────┐
     │  block_hero              │
     │  ─────────────           │
-    │  • signal (boolean)      │  ← if true: show status pill (label is
-    │                            │     hardcoded in app, not Storyblok text)
+    │  • signal (boolean)      │  ← true=open, false=closed
+    │  • signal_closed_text    │  ← text for closed state
+    │    (text, optional)      │     e.g. "Unavailable for new projects"
+    │                          │
     │  • headline (text)       │
     │  • text (richtext)       │
     │  • cta (text)            │  ← button label (schema is "text" + link
-    │                            │     UI options in Storyblok)
+    │                          │     UI options in Storyblok)
     │  • media (asset)         │  ← image or video
     │  • footnote (richtext)   │  ← e.g. links / resume line
     │  • background (option)   │  ← datasource: backgrounds
     └──────────────────────────┘
+
                  │
                  ▼
+
     ┌──────────────────────────┐
-    │  block_bento               │
+    │  block_bento             │
     │  ─────────────           │
     │  • headline (text)       │
     │  • headline_a11y (bool)  │  ← boolean, not a free-text a11y field
@@ -35,25 +41,31 @@
     │  • testimonials[]        │  → nested: testimonial
     │  • background (option)   │
     └──────────────────────────┘
+
                  │
                  ▼
+
     ┌──────────────────────────┐
     │  (client logos / marquee)│  ← NOT in components.json for this space;
-    │                            │     implement in app or add your own blok
+    │                          │     implement in app or add your own blok
     └──────────────────────────┘
+
                  │
                  ▼
+
     ┌──────────────────────────┐
-    │  block_text                │
+    │  block_text              │
     │  ─────────────           │
     │  • headline (text)       │
     │  • text (richtext)       │  ← e.g. "Strategy"-style copy
     │  • background (option)   │
     └──────────────────────────┘
+
                  │
                  ▼
+
     ┌──────────────────────────┐
-    │  block_projects            │
+    │  block_projects          │
     │  ─────────────           │
     │  • headline (text)       │
     │  • headline_a11y (bool)  │
@@ -61,36 +73,44 @@
     │  • projects[]            │  → nested: project
     │  • background (option)   │
     └──────────────────────────┘
+
                  │
                  ▼
+
     ┌──────────────────────────┐
-    │  block_faq                 │
+    │  block_faq               │
     │  ─────────────           │
     │  • headline (text)       │
     │  • faq[]                 │  → nested: faq
     │  • background (option)   │
     └──────────────────────────┘
+
                  │
                  ▼
+
     ┌──────────────────────────┐
-    │  block_play                │
+    │  block_play              │
     │  ─────────────           │
     │  • headline (text)       │
     │  • headline_a11y (bool)  │
     │  • text (richtext)       │  ← intro copy only in schema; no child
-    │                            │     bloks here — UI cards = app code
+    │                          │     bloks here — UI cards = app code
     │  • background (option)   │
     └──────────────────────────┘
+
                  │
                  ▼
+
     ┌──────────────────────────┐
-    │  footer / globals          │  ← not in page.blocks[] in this schema;
-    │  (email, company line, …)  │     likely layout, env, or hardcoded
+    │  footer / globals        │  ← not in page.blocks[] in this schema;
+    │  (email, company line…)  │     likely layout, env, or hardcoded
     └──────────────────────────┘
 
+```text
 ┌─────────────────────────────────────────────────────────────────────────┐
-│ NESTED COMPONENTS (used inside blocks above) │
+│ NESTED COMPONENTS (used inside blocks above)                            │
 └─────────────────────────────────────────────────────────────────────────┘
+```
 
     testimonial          project                 faq
     ───────────          ───────                 ───
@@ -103,7 +123,7 @@
 
 ## Next.js repo mapping
 
-Storyblok **`component`** strings (API) ↔ this repo’s React components. Update when you rename files or change the blok resolver.
+Storyblok `component` strings (API) ↔ this repo’s React components. Update when you rename files or change the blok resolver.
 
 ### Page root
 
@@ -126,14 +146,14 @@ Storyblok **`component`** strings (API) ↔ this repo’s React components. Upda
 
 Rough mapping from `blok.content`:
 
-| Block            | Fields                                                                              |
-| ---------------- | ----------------------------------------------------------------------------------- |
-| `block_hero`     | `signal`, `headline`, `text`, `cta`, `media`, `footnote`, `background`              |
-| `block_bento`    | `headline`, `headline_a11y`, `text`, `about`, `testimonials` (nested), `background` |
-| `block_text`     | `headline`, `text`, `background`                                                    |
-| `block_projects` | `headline`, `headline_a11y`, `text`, `projects` (nested), `background`              |
-| `block_faq`      | `headline`, `faq` (nested), `background`                                            |
-| `block_play`     | `headline`, `headline_a11y`, `text`, `background`                                   |
+| Block            | Fields                                                                                       |
+| ---------------- | -------------------------------------------------------------------------------------------- |
+| `block_hero`     | `signal`, `signal_closed_text`, `headline`, `text`, `cta`, `media`, `footnote`, `background` |
+| `block_bento`    | `headline`, `headline_a11y`, `text`, `about`, `testimonials` (nested), `background`          |
+| `block_text`     | `headline`, `text`, `background`                                                             |
+| `block_projects` | `headline`, `headline_a11y`, `text`, `projects` (nested), `background`                       |
+| `block_faq`      | `headline`, `faq` (nested), `background`                                                     |
+| `block_play`     | `headline`, `headline_a11y`, `text`, `background`                                            |
 
 ### Nested bloks
 
