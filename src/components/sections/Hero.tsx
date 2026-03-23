@@ -5,6 +5,7 @@ import AvailabilityBadge from "../ui/AvailabilityBadge";
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { cn } from "@/lib/utils";
+import { StoryblokRichText } from "@storyblok/react";
 
 type HeroProps = {
   blok: HeroBlock;
@@ -17,6 +18,13 @@ export default function Hero({ blok }: HeroProps) {
   const headline =
     blok.headline?.trim() ||
     "Crafted experiences, designed to be beautiful and built to last.";
+
+  const fallbackBodyText =
+    "I’m a freelance fullstack developer building with modern web technologies from my studio in Sweden.";
+  const hasBodyRichText =
+    blok.text?.type === "doc" &&
+    Array.isArray(blok.text.content) &&
+    blok.text.content.length > 0;
 
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -94,10 +102,7 @@ export default function Hero({ blok }: HeroProps) {
           <h1
             className="text-fluid-36-64 max-w-[18ch] font-light text-pretty"
             ref={headingRef}
-            aria-label={
-              headline?.trim() ||
-              "Crafted experiences, designed to be beautiful and built to last."
-            }
+            aria-label={headline}
           >
             {headlineWords.map((word, wi) => (
               <span key={wi} aria-hidden="true" className="inline-block">
@@ -114,11 +119,12 @@ export default function Hero({ blok }: HeroProps) {
               </span>
             ))}
           </h1>
-          <div>
-            <p>
-              I’m a freelance web designer and developer building with modern
-              web technologies from my studio in Sweden.
-            </p>
+          <div className="@md/hero-content:text-18 text-fg-secondary min-h-24 max-w-[40ch]">
+            {hasBodyRichText && blok.text ? (
+              <StoryblokRichText doc={blok.text} />
+            ) : (
+              <p>{fallbackBodyText}</p>
+            )}
           </div>
         </div>
         <div>

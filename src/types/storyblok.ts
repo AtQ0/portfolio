@@ -1,7 +1,16 @@
-export type StoryblokRichText = {
-  type: "doc";
-  content?: unknown[];
+import type { StoryblokRichTextNode as SbRichTextNode } from "@storyblok/react";
+import type { ReactElement } from "react";
+
+export type StoryblokRichTextNode = {
+  type?: string;
+  attrs?: Record<string, unknown>;
+  text?: string;
+  marks?: Array<Record<string, unknown>>;
+  content?: StoryblokRichTextNode[];
+  [key: string]: unknown;
 };
+
+export type StoryblokRichText = SbRichTextNode<ReactElement>;
 
 export type StoryblokAsset = {
   id?: number;
