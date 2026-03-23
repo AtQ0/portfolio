@@ -1,6 +1,7 @@
 import Hero from "@/components/sections/Hero";
 import IntroGrid from "@/components/sections/intro-grid/IntroGrid";
 import { getStoryblokApi } from "@/lib/storyblok";
+import { isHeroBlock, PageContent } from "@/types/storyblok";
 
 export default async function Home() {
   const storyblokApi = getStoryblokApi();
@@ -8,13 +9,14 @@ export default async function Home() {
     version: "draft",
   });
 
-  const heroBlok = data.story.content;
-  console.log("keys", Object.keys(heroBlok));
-  console.log("yeah", heroBlok.yeah);
+  const pageContent = data.story.content as PageContent;
+  const heroBlock = pageContent.body?.find(isHeroBlock);
+
+  console.log("heroBlock", heroBlock);
 
   return (
     <main className="h-screen">
-      <Hero blok={heroBlok} />
+      {heroBlock ? <Hero blok={heroBlock} /> : null}
       <IntroGrid />
     </main>
   );

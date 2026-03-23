@@ -1,0 +1,46 @@
+1. Tailwind Colors
+
+Add these to your tailwind.config.js:
+
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        onyx: '#111111',
+        black: '#000000',
+        teaGreen: '#cefdae',
+        white: '#ffffff',
+        grey: '#808080',
+        lightCoral: '#ec8f8c',
+        brightSnow: '#f6f6f6',
+        brilliantAzure: '#3f8ae2',
+      },
+    },
+  },
+};
+
+Tailwind does not include the alpha channel in hex by default (#111111ff → #111111). Use rgba() in inline styles if you need transparency.
+
+2. Tailwind Gradients
+
+Tailwind only provides direction + color stops via bg-gradient-to-*. For your gradients:
+
+// in tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      backgroundImage: {
+        'gradient-top': 'linear-gradient(0deg, #111111, #000000, #cefdae, #ffffff, #808080, #ec8f8c, #f6f6f6, #3f8ae2)',
+        'gradient-right': 'linear-gradient(90deg, #111111, #000000, #cefdae, #ffffff, #808080, #ec8f8c, #f6f6f6, #3f8ae2)',
+        'gradient-bottom': 'linear-gradient(180deg, #111111, #000000, #cefdae, #ffffff, #808080, #ec8f8c, #f6f6f6, #3f8ae2)',
+        'gradient-left': 'linear-gradient(270deg, #111111, #000000, #cefdae, #ffffff, #808080, #ec8f8c, #f6f6f6, #3f8ae2)',
+        'gradient-top-right': 'linear-gradient(45deg, #111111, #000000, #cefdae, #ffffff, #808080, #ec8f8c, #f6f6f6, #3f8ae2)',
+        'gradient-bottom-right': 'linear-gradient(135deg, #111111, #000000, #cefdae, #ffffff, #808080, #ec8f8c, #f6f6f6, #3f8ae2)',
+        'gradient-top-left': 'linear-gradient(225deg, #111111, #000000, #cefdae, #ffffff, #808080, #ec8f8c, #f6f6f6, #3f8ae2)',
+        'gradient-bottom-left': 'linear-gradient(315deg, #111111, #000000, #cefdae, #ffffff, #808080, #ec8f8c, #f6f6f6, #3f8ae2)',
+        'gradient-radial': 'radial-gradient(#111111, #000000, #cefdae, #ffffff, #808080, #ec8f8c, #f6f6f6, #3f8ae2)',
+      },
+    },
+  },
+};

@@ -19,13 +19,14 @@
     │  • signal_closed_text    │  ← text for closed state
     │    (text, optional)      │     e.g. "Unavailable for new projects"
     │                          │
-    │  • headline (text)       │
-    │  • text (richtext)       │
-    │  • cta (text)            │  ← button label (schema is "text" + link
-    │                          │     UI options in Storyblok)
-    │  • media (asset)         │  ← image or video
-    │  • footnote (richtext)   │  ← e.g. links / resume line
-    │  • background (option)   │  ← datasource: backgrounds
+    │  • headline (text)       │  ← main hero title
+    │  • text (richtext)       │  ← short intro paragraph
+    │  • cta (text)            │  ← button label (e.g. "Find out more")
+    │                          │
+    │  • media (asset)         │  ← hero image or video
+    │                          │
+    │  • footnote (richtext)   │  ← small supporting text with links
+    │  • background (option)   │  ← section color/theme choice
     └──────────────────────────┘
 
                  │
@@ -127,20 +128,20 @@ Storyblok `component` strings (API) ↔ this repo’s React components. Update w
 
 ### Page root
 
-| Storyblok | Role                        | Repo / usage                                                                                                                     |
-| --------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `page`    | Root story: `blocks[]`, SEO | `src/app/page.tsx` (fetch story, loop `blocks`), `src/app/layout.tsx` (shell). SEO: `seo_title`, `seo_description`, `seo_image`. |
+| Storyblok | Role                        |
+| --------- | --------------------------- |
+| `page`    | Root story: `blocks[]`, SEO |
 
 ### Section blocks (`page.content.blocks[]`)
 
-| Storyblok `component` | React component                    | Path                                               |
-| --------------------- | ---------------------------------- | -------------------------------------------------- |
-| `block_hero`          | `Hero`                             | `src/components/sections/Hero.tsx`                 |
-| `block_bento`         | `IntroGrid` (or rename to `Bento`) | `src/components/sections/intro-grid/IntroGrid.tsx` |
-| `block_text`          | `Strategy`                         | `src/components/sections/Strategy.tsx`             |
-| `block_projects`      | `Projects`                         | `src/components/sections/projects/Projects.tsx`    |
-| `block_faq`           | `Faq`                              | `src/components/sections/Faq.tsx`                  |
-| `block_play`          | `Play`                             | `src/components/sections/Play.tsx`                 |
+| Storyblok `component` | React component                    |
+| --------------------- | ---------------------------------- |
+| `block_hero`          | `Hero`                             |
+| `block_bento`         | `IntroGrid` (or rename to `Bento`) |
+| `block_text`          | `Strategy`                         |
+| `block_projects`      | `Projects`                         |
+| `block_faq`           | `Faq`                              |
+| `block_play`          | `Play`                             |
 
 ### Fields → props (by block)
 

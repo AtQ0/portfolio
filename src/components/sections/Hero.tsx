@@ -1,110 +1,78 @@
-import { cn } from "@/lib/utils";
-import { StoryblokServerComponent, SbBlokData } from "@storyblok/react/rsc";
+"use client";
+import { HeroBlock } from "@/types/storyblok";
+import AvailabilityBadge from "../ui/AvailabilityBadge";
 
-type HeroBlok = SbBlokData & {
-  title: string;
-  body?: SbBlokData[];
-};
+import { useLayoutEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { cn } from "@/lib/utils";
 
 type HeroProps = {
-  blok: HeroBlok;
+  blok: HeroBlock;
 };
 
 export default function Hero({ blok }: HeroProps) {
+  const isOpen = blok.signal ?? true;
+  const closedText =
+    blok.signal_closed_text?.trim() || "Unavailable for new projects";
+
+  const headline =
+    blok.headline?.trim() ||
+    "Crafted experiences, designed to be beautiful and built to last.";
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const [ready, setReady] = useState(false);
+
+  useLayoutEffect(() => {
+    if (!headingRef.current) return;
+    const chars = headingRef.current.querySelectorAll(".hero-char");
+    gsap.fromTo(
+      chars,
+      { y: 8, autoAlpha: 0, rotate: -5 },
+      {
+        y: 0,
+        autoAlpha: 1,
+        rotate: 0,
+        duration: 0.5,
+        stagger: 0.025,
+        ease: "power2.out",
+        onStart: () => setReady(true),
+      },
+    );
+  }, [headline]);
+
+  if (!headline) return null;
+
   return (
     <section className="bg-bg-secondary grid w-full lg:grid-cols-2">
-      <div className="p-gutter flex h-screen flex-col justify-between bg-amber-500">
+      <div className="p-gutter flex h-screen flex-col justify-between">
         {/* Content */}
-        <div
-          className={cn(
-            "bg-bg-primary text-12 flex w-fit",
-            "items-center gap-2.5 rounded-full px-3 py-1.5",
-          )}
-        >
-          <span className="bg-tea-green block size-2 rounded-full" />
-          <span className="-mt-px">Open for new projects</span>
-        </div>
+        <AvailabilityBadge isOpen={isOpen} closedText={closedText} />
 
-        <div className="bg-pink-500 p-10">
+        <div className="@container/hero-content">
           <h1
-            className="text-fluid-36-64 max-w-[18ch] bg-blue-500 text-pretty"
-            aria-label="Crafted experiences, designed to be beautiful and built to last."
+            className="text-fluid-36-64 max-w-[18ch] font-light text-pretty"
+            ref={headingRef}
+            aria-label={
+              headline?.trim() ||
+              "Crafted experiences, designed to be beautiful and built to last."
+            }
           >
-            <span aria-hidden="true">
-              <span aria-hidden="true">C</span>
-              <span aria-hidden="true">r</span>
-              <span aria-hidden="true">a</span>
-              <span aria-hidden="true">f</span>
-              <span aria-hidden="true">t</span>
-              <span aria-hidden="true">e</span>
-              <span aria-hidden="true">d</span>
-            </span>
-            <span aria-hidden="true">
-              <span aria-hidden="true">e</span>
-              <span aria-hidden="true">x</span>
-              <span aria-hidden="true">p</span>
-              <span aria-hidden="true">e</span>
-              <span aria-hidden="true">r</span>
-              <span aria-hidden="true">i</span>
-              <span aria-hidden="true">e</span>
-              <span aria-hidden="true">n</span>
-              <span aria-hidden="true">c</span>
-              <span aria-hidden="true">e</span>
-              <span aria-hidden="true">s</span>
-              <span aria-hidden="true">,</span>
-            </span>
-            <span aria-hidden="true">
-              <span aria-hidden="true">d</span>
-              <span aria-hidden="true">e</span>
-              <span aria-hidden="true">s</span>
-              <span aria-hidden="true">i</span>
-              <span aria-hidden="true">g</span>
-              <span aria-hidden="true">n</span>
-              <span aria-hidden="true">e</span>
-              <span aria-hidden="true">d</span>
-            </span>
-            <span aria-hidden="true">
-              <span aria-hidden="true">t</span>
-              <span aria-hidden="true">o</span>
-            </span>
-            <span aria-hidden="true">
-              <span aria-hidden="true">b</span>
-              <span aria-hidden="true">e</span>
-            </span>
-            <span aria-hidden="true">
-              <span aria-hidden="true">b</span>
-              <span aria-hidden="true">e</span>
-              <span aria-hidden="true">a</span>
-              <span aria-hidden="true">u</span>
-              <span aria-hidden="true">t</span>
-              <span aria-hidden="true">i</span>
-              <span aria-hidden="true">f</span>
-              <span aria-hidden="true">u</span>
-              <span aria-hidden="true">l</span>
-            </span>
-            <span aria-hidden="true">
-              <span aria-hidden="true">a</span>
-              <span aria-hidden="true">n</span>
-              <span aria-hidden="true">d</span>
-            </span>
-            <span aria-hidden="true">
-              <span aria-hidden="true">b</span>
-              <span aria-hidden="true">u</span>
-              <span aria-hidden="true">i</span>
-              <span aria-hidden="true">l</span>
-              <span aria-hidden="true">t</span>
-            </span>
-            <span aria-hidden="true">
-              <span aria-hidden="true">t</span>
-              <span aria-hidden="true">o</span>
-            </span>
-            <span aria-hidden="true">
-              <span aria-hidden="true">l</span>
-              <span aria-hidden="true">a</span>
-              <span aria-hidden="true">s</span>
-              <span aria-hidden="true">t</span>
-              <span aria-hidden="true">.</span>
-            </span>
+            {headline.split(" ").map((word, wi) => (
+              <span key={wi} aria-hidden="true" className="inline-block">
+                {word.split("").map((char, ci) => (
+                  <span
+                    key={`${wi}-${ci}`}
+                    aria-hidden="true"
+                    className={cn(
+                      "hero-char inline-block",
+                      !ready && "opacity-0",
+                    )}
+                  >
+                    {char}
+                  </span>
+                ))}
+                {wi < headline.split(" ").length - 1 ? "\u00A0" : ""}
+              </span>
+            ))}
           </h1>
           <div>
             <p>
@@ -114,12 +82,12 @@ export default function Hero({ blok }: HeroProps) {
           </div>
         </div>
         <div>
-          <p>WHAAAAAAAAWAWAWWAWAAWA</p>
+          <p>FOOTNOTE</p>
         </div>
       </div>
 
       {/* Profile image */}
-      <div className="w-full bg-blue-500">
+      <div className="bg-bg-primary w-full">
         {/* image here */}
 
         <p>Image</p>
