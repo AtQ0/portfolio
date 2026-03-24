@@ -6,14 +6,14 @@ import gsap from "gsap";
 type UseHeroAnimationParams = {
   sectionRef: RefObject<HTMLElement | null>;
   headingRef: RefObject<HTMLHeadingElement | null>;
-  imageColRef: RefObject<HTMLDivElement | null>;
+  imageOverlayRef: RefObject<HTMLDivElement | null>;
   charsSelector?: string;
 };
 
 export function useHeroAnimation({
   sectionRef,
   headingRef,
-  imageColRef,
+  imageOverlayRef,
   charsSelector = ".hero-char",
 }: UseHeroAnimationParams) {
   useLayoutEffect(() => {
@@ -47,21 +47,25 @@ export function useHeroAnimation({
       };
 
       const animateDesktopTimeline = () => {
-        // If image column is missing, gracefully fallback to text-only animation.
-        if (!imageColRef.current) {
+        // If image overlay is missing, gracefully fallback to text-only animation.
+        if (!imageOverlayRef.current) {
           animateCharsOnly();
           return;
         }
 
         const tl = gsap.timeline();
 
-        // Animate right column from offscreen.
-        tl.fromTo(
-          imageColRef.current,
-          { xPercent: 100, autoAlpha: 0 },
+        // Ensure overlay starts as full cover on desktop.
+        gsap.set(imageOverlayRef.current, {
+          scaleX: 1,
+          transformOrigin: "left center",
+        });
+
+        // Reveal Image by shrinking overlay right -> left.
+        tl.to(
+          imageOverlayRef.current,
           {
-            xPercent: 0,
-            autoAlpha: 1,
+            scaleX: 0,
             duration: 1.1,
             ease: "power2.inOut",
           },
@@ -87,12 +91,15 @@ export function useHeroAnimation({
       if (isDesktop) {
         animateDesktopTimeline();
       } else {
+        // Hide overlay on non-desktop so image is visible.
+        if (imageOverlayRef.current) {
+          gsap.set(imageOverlayRef.current, { scaleX: 0 });
+        }
         animateCharsOnly();
       }
     }, sectionRef); // scoped GSAP context for safer cleanup
 
     // context-based cleanup
     return () => ctx.revert();
-  }, [charsSelector, headingRef, imageColRef, sectionRef]);
+  }, [charsSelector, headingRef, imageOverlayRef, sectionRef]);
 }
-//bbbb

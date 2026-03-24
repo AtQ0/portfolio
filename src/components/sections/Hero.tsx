@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { StoryblokRichText } from "@storyblok/react";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 import { GlowButton } from "../ui/GlowButton";
+import Image from "next/image";
 
 type HeroProps = {
   blok: HeroBlock;
@@ -28,6 +29,13 @@ export default function Hero({ blok }: HeroProps) {
     blok.text.content.length > 0;
 
   const ctaLabel = blok.cta?.trim() || "Find out more";
+
+  const imageSrc =
+    typeof blok.media?.filename === "string" ? blok.media.filename : null;
+  const imageAlt =
+    (typeof blok.media?.alt === "string" && blok.media.alt.trim()) ||
+    (typeof blok.media?.title === "string" && blok.media.title.trim()) ||
+    "Portrait image";
 
   const hasFootnoteRichText =
     blok.footnote?.type === "doc" &&
@@ -71,7 +79,7 @@ export default function Hero({ blok }: HeroProps) {
 
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const imageColRef = useRef<HTMLDivElement>(null);
+  const imageOverlayRef = useRef<HTMLDivElement>(null);
   const footnoteRef = useRef<HTMLDivElement>(null);
 
   // Patch rendered footnote links: external links open in new tab.
@@ -95,7 +103,7 @@ export default function Hero({ blok }: HeroProps) {
   useHeroAnimation({
     sectionRef,
     headingRef,
-    imageColRef,
+    imageOverlayRef,
     charsSelector: ".hero-char",
   });
 
@@ -155,11 +163,28 @@ export default function Hero({ blok }: HeroProps) {
           )}
         </div>
       </div>
-
       {/* Profile image */}
-      <div ref={imageColRef} className="bg-bg-primary w-full">
-        {/* image here */}
-        IMAGE
+      <div className="bg-bg-primary relative w-full overflow-hidden lg:max-h-screen">
+        {imageSrc ? (
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            width={1000}
+            height={1334}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="h-auto w-full"
+            priority
+          />
+        ) : (
+          <div className="text-fg-secondary flex min-h-[320px] items-center justify-center">
+            No image selected
+          </div>
+        )}
+
+        <div
+          ref={imageOverlayRef}
+          className="bg-bg-primary pointer-events-none absolute inset-0 z-10 hidden lg:block"
+        />
       </div>
     </section>
   );
