@@ -2,10 +2,10 @@
 import { HeroBlock } from "@/types/storyblok";
 import AvailabilityBadge from "../ui/AvailabilityBadge";
 
-import { useLayoutEffect, useRef } from "react";
-import gsap from "gsap";
+import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { StoryblokRichText } from "@storyblok/react";
+import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 
 type HeroProps = {
   blok: HeroBlock;
@@ -30,64 +30,14 @@ export default function Hero({ blok }: HeroProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const imageColRef = useRef<HTMLDivElement>(null);
 
+  useHeroAnimation({
+    sectionRef,
+    headingRef,
+    imageColRef,
+    charsSelector: ".hero-char",
+  });
+
   const headlineWords = headline.split(" ");
-
-  useLayoutEffect(() => {
-    if (!sectionRef.current || !headingRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const chars = gsap.utils.toArray<HTMLElement>(".hero-char");
-      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-
-      // Animate right column from offscreen
-      if (isDesktop && imageColRef.current) {
-        const tl = gsap.timeline();
-        tl.fromTo(
-          imageColRef.current,
-          { xPercent: 100, autoAlpha: 0 },
-          {
-            xPercent: 0,
-            autoAlpha: 1,
-            duration: 1.1,
-            ease: "power2.inOut",
-          },
-          0,
-        );
-
-        // Animate headline characters
-        tl.fromTo(
-          chars,
-          { y: 8, autoAlpha: 0, rotate: -5 },
-          {
-            y: 0,
-            autoAlpha: 1,
-            rotate: 0,
-            duration: 0.75,
-            stagger: 0.025,
-            ease: "power2.out",
-          },
-          0.1,
-        );
-      } else {
-        // Non-desktop: only animate characters
-        gsap.fromTo(
-          chars,
-          { y: 8, autoAlpha: 0, rotate: -5 },
-          {
-            y: 0,
-            autoAlpha: 1,
-            rotate: 0,
-            duration: 0.75,
-            stagger: 0.025,
-            ease: "power2.out",
-          },
-        );
-      }
-    }, sectionRef); // scoped GSAP context for safer cleanup
-
-    // context-based cleanup
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section
