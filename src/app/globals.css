@@ -242,6 +242,13 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
+/* Hero headline characters start hidden */
+.hero-char {
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity;
+}
+
 /* Generic animated link styles:
    - Use `animated-link` on regular JSX links.
    - Use `richtext-links` on a container to auto-style all nested <a> tags
