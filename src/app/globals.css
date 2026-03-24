@@ -231,17 +231,49 @@
 /* ========================
    4. Base Styles
 ========================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--color-bg-primary);
   color: var(--color-fg-primary);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
-/* Hero headline characters start hidden */
-.hero-char {
-  opacity: 0;
-  visibility: hidden;
-  will-change: transform, opacity;
+/* Generic animated link styles:
+   - Use `animated-link` on regular JSX links.
+   - Use `richtext-links` on a container to auto-style all nested <a> tags
+     (e.g. links rendered by Storyblok rich text, plus fallback links inside same container). */
+.animated-link,
+.animated-link:visited,
+.richtext-links a,
+.richtext-links a:visited {
+  color: var(--color-light-coral);
+  text-decoration: none;
+  font: inherit;
+  line-height: inherit;
+  vertical-align: baseline;
+  display: inline;
+  padding: 0;
+  background-image:
+    linear-gradient(var(--color-light-coral), var(--color-light-coral)),
+    linear-gradient(var(--color-light-coral), var(--color-light-coral));
+  background-repeat: no-repeat;
+  background-position:
+    left 100%,
+    right 100%;
+  background-size:
+    0% 1px,
+    0% 1px;
+  transition: background-size 0.25s ease;
+}
+.animated-link:hover,
+.richtext-links a:hover {
+  background-size:
+    50% 1px,
+    50% 1px;
 }
 
 /* Shadcn CSS dark mode variables */

@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { StoryblokRichText } from "@storyblok/react";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
+import { GlowButton } from "../ui/GlowButton";
 
 type HeroProps = {
   blok: HeroBlock;
@@ -26,6 +27,48 @@ export default function Hero({ blok }: HeroProps) {
     Array.isArray(blok.text.content) &&
     blok.text.content.length > 0;
 
+  const ctaLabel = blok.cta?.trim() || "Find out more";
+
+  const hasFootnoteRichText =
+    blok.footnote?.type === "doc" &&
+    Array.isArray(blok.footnote.content) &&
+    blok.footnote.content.length > 0;
+
+  const fallbackFootnote = (
+    <>
+      Find me at{" "}
+      <a
+        href="https://github.com/AtQ0"
+        target="_blank"
+        rel="noreferrer"
+        className="underline underline-offset-4 hover:no-underline"
+      >
+        GitHub
+      </a>{" "}
+      and{" "}
+      <a
+        href="https://www.linkedin.com/in/atkobabic/"
+        target="_blank"
+        rel="noreferrer"
+        className="underline underline-offset-4 hover:no-underline"
+      >
+        LinkedIn
+      </a>
+      .
+      <br />
+      Download my{" "}
+      <a
+        href="/files/resume-atko-babic.pdf"
+        target="_blank"
+        rel="noreferrer"
+        className="underline underline-offset-4 hover:no-underline"
+      >
+        resume
+      </a>{" "}
+      (PDF 918kb)
+    </>
+  );
+
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const imageColRef = useRef<HTMLDivElement>(null);
@@ -44,11 +87,11 @@ export default function Hero({ blok }: HeroProps) {
       ref={sectionRef}
       className="bg-bg-secondary grid w-full overflow-hidden lg:grid-cols-2"
     >
-      <div className="p-gutter flex h-screen flex-col justify-between">
+      <div className="p-gutter flex h-screen flex-col justify-between gap-10">
         {/* Content */}
         <AvailabilityBadge isOpen={isOpen} closedText={closedText} />
 
-        <div className="@container/hero-content">
+        <div className="@container/hero-content my-auto flex flex-col gap-7">
           <h1
             className="text-fluid-36-64 max-w-[18ch] font-light text-pretty"
             ref={headingRef}
@@ -69,22 +112,32 @@ export default function Hero({ blok }: HeroProps) {
               </span>
             ))}
           </h1>
-          <div className="@md/hero-content:text-18 text-fg-secondary min-h-24 max-w-[40ch]">
+          <div className="@md/hero-content:text-18 text-16 text-fg-secondary max-w-[32ch] min-[500px]:max-w-[40ch]">
             {hasBodyRichText && blok.text ? (
               <StoryblokRichText doc={blok.text} />
             ) : (
               <p>{fallbackBodyText}</p>
             )}
           </div>
+          <div className="mt-3 w-fit">
+            <GlowButton type="button" asChild>
+              <a href="#about">{ctaLabel}</a>
+            </GlowButton>
+          </div>
         </div>
-        <div>
-          <p>FOOTNOTE</p>
+        <div className="richtext-links text-fg-secondary text-[12px] leading-[1.4]">
+          {hasFootnoteRichText && blok.footnote ? (
+            <StoryblokRichText doc={blok.footnote} />
+          ) : (
+            fallbackFootnote
+          )}
         </div>
       </div>
 
       {/* Profile image */}
       <div ref={imageColRef} className="bg-bg-primary w-full">
         {/* image here */}
+        IMAGE
       </div>
     </section>
   );

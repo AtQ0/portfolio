@@ -95,3 +95,4 @@ export function useHeroAnimation({
     return () => ctx.revert();
   }, [charsSelector, headingRef, imageColRef, sectionRef]);
 }
+//bbbb
