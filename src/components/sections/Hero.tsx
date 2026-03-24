@@ -2,7 +2,7 @@
 import { HeroBlock } from "@/types/storyblok";
 import AvailabilityBadge from "../ui/AvailabilityBadge";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { StoryblokRichText } from "@storyblok/react";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
@@ -72,6 +72,25 @@ export default function Hero({ blok }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const imageColRef = useRef<HTMLDivElement>(null);
+  const footnoteRef = useRef<HTMLDivElement>(null);
+
+  // Patch rendered footnote links: external links open in new tab.
+  useEffect(() => {
+    const root = footnoteRef.current;
+    if (!root) return;
+    const links = root.querySelectorAll<HTMLAnchorElement>("a");
+    links.forEach((a) => {
+      const href = a.getAttribute("href") ?? "";
+      const isExternal =
+        href.startsWith("http://") ||
+        href.startsWith("https://") ||
+        href.startsWith("//");
+      if (isExternal) {
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener noreferrer");
+      }
+    });
+  }, [blok.footnote]);
 
   useHeroAnimation({
     sectionRef,
@@ -125,7 +144,10 @@ export default function Hero({ blok }: HeroProps) {
             </GlowButton>
           </div>
         </div>
-        <div className="richtext-links text-fg-secondary text-[12px] leading-[1.4]">
+        <div
+          ref={footnoteRef}
+          className="richtext-links text-fg-secondary text-[12px] leading-[1.4]"
+        >
           {hasFootnoteRichText && blok.footnote ? (
             <StoryblokRichText doc={blok.footnote} />
           ) : (
