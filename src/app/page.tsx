@@ -1,5 +1,4 @@
 import Hero from "@/components/sections/Hero";
-import IntroGrid from "@/components/sections/intro-grid/IntroGrid";
 import { getStoryblokApi } from "@/lib/storyblok";
 import { isHeroBlock, PageContent } from "@/types/storyblok";
 
@@ -17,7 +16,6 @@ export default async function Home() {
   return (
     <main className="h-screen">
       {heroBlock ? <Hero blok={heroBlock} /> : null}
-      <IntroGrid />
     </main>
   );
 }

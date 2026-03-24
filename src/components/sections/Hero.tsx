@@ -112,7 +112,7 @@ export default function Hero({ blok }: HeroProps) {
   return (
     <section
       ref={sectionRef}
-      className="bg-bg-secondary grid w-full overflow-hidden lg:grid-cols-2"
+      className="bg-bg-primary grid w-full overflow-hidden lg:grid-cols-2"
     >
       <div className="p-gutter flex h-screen flex-col justify-between gap-10">
         {/* Content */}
