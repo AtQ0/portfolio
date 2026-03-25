@@ -1,6 +1,7 @@
 import Hero from "@/components/sections/Hero";
+import BentoGrid from "@/components/sections/bento/BentoGrid";
 import { getStoryblokApi } from "@/lib/storyblok";
-import { isHeroBlock, PageContent } from "@/types/storyblok";
+import { isBentoBlock, isHeroBlock, PageContent } from "@/types/storyblok";
 
 export default async function Home() {
   const storyblokApi = getStoryblokApi();
@@ -10,12 +11,15 @@ export default async function Home() {
 
   const pageContent = data.story.content as PageContent;
   const heroBlock = pageContent.body?.find(isHeroBlock);
+  const bentoBlock = pageContent.body?.find(isBentoBlock);
 
-  console.log("heroBlock", heroBlock);
+  console.log("pageContent", pageContent);
+  console.log("bentoBlock", bentoBlock);
 
   return (
     <main className="h-screen">
       {heroBlock ? <Hero blok={heroBlock} /> : null}
+      {bentoBlock ? <BentoGrid blok={bentoBlock} /> : null}
     </main>
   );
 }

@@ -28,6 +28,7 @@ export default function Hero({ blok }: HeroProps) {
     blok.text.content.length > 0;
 
   const ctaLabel = blok.cta?.trim() || "Find out more";
+  const ctaLink = blok.ctaLink?.trim() || "#bento00000";
 
   const imageSrc =
     typeof blok.media?.filename === "string" ? blok.media.filename : null;
@@ -167,7 +168,7 @@ export default function Hero({ blok }: HeroProps) {
           {/* CTA button */}
           <div ref={ctaRef} className="hero-cta mt-3 w-fit">
             <GlowButton type="button" asChild>
-              <a href="#about">{ctaLabel}</a>
+              <a href={ctaLink}>{ctaLabel}</a>
             </GlowButton>
           </div>
         </div>
