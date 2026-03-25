@@ -1,5 +1,5 @@
 "use client";
-import { HeroBlock } from "@/types/storyblok";
+import type { HeroBlock } from "@/types/storyblok";
 import AvailabilityBadge from "../ui/AvailabilityBadge";
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
@@ -10,9 +10,10 @@ import Image from "next/image";
 
 type HeroProps = {
   blok: HeroBlock;
+  ctaTarget: string;
 };
 
-export default function Hero({ blok }: HeroProps) {
+export default function Hero({ blok, ctaTarget }: HeroProps) {
   const isOpen = blok.signal ?? true;
   const closedText =
     blok.signalClosedText?.trim() || "Unavailable for new projects";
@@ -28,7 +29,6 @@ export default function Hero({ blok }: HeroProps) {
     blok.text.content.length > 0;
 
   const ctaLabel = blok.cta?.trim() || "Find out more";
-  const ctaLink = blok.ctaLink?.trim() || "#bento00000";
 
   const imageSrc =
     typeof blok.media?.filename === "string" ? blok.media.filename : null;
@@ -168,7 +168,8 @@ export default function Hero({ blok }: HeroProps) {
           {/* CTA button */}
           <div ref={ctaRef} className="hero-cta mt-3 w-fit">
             <GlowButton type="button" asChild>
-              <a href={ctaLink}>{ctaLabel}</a>
+              {/* Hero CTA */}
+              <a href={`#${ctaTarget}`}>{ctaLabel}</a>
             </GlowButton>
           </div>
         </div>
