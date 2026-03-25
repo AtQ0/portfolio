@@ -77,10 +77,12 @@ export default function Hero({ blok }: HeroProps) {
   );
 
   const sectionRef = useRef<HTMLElement>(null);
+  const availabilityBadgeRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const imageOverlayRef = useRef<HTMLDivElement>(null);
   const footnoteRef = useRef<HTMLDivElement>(null);
   const bodyTextRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
   // Patch rendered footnote links: external links open in new tab.
   useEffect(() => {
@@ -103,8 +105,11 @@ export default function Hero({ blok }: HeroProps) {
   // Hero animation
   useHeroAnimation({
     sectionRef,
+    availabilityBadgeRef,
     headingRef,
     bodyTextRef,
+    ctaRef,
+    footnoteRef,
     imageOverlayRef,
     charsSelector: ".hero-char",
   });
@@ -119,7 +124,9 @@ export default function Hero({ blok }: HeroProps) {
       {/* Left column */}
       <div className="p-gutter flex h-screen flex-col justify-between gap-10">
         {/* Availability badge */}
-        <AvailabilityBadge isOpen={isOpen} closedText={closedText} />
+        <div ref={availabilityBadgeRef} className="hero-availability-badge">
+          <AvailabilityBadge isOpen={isOpen} closedText={closedText} />
+        </div>
 
         {/* Content container */}
         <div className="@container/hero-content my-auto flex flex-col gap-7">
@@ -158,7 +165,7 @@ export default function Hero({ blok }: HeroProps) {
           </div>
 
           {/* CTA button */}
-          <div className="mt-3 w-fit">
+          <div ref={ctaRef} className="hero-cta mt-3 w-fit">
             <GlowButton type="button" asChild>
               <a href="#about">{ctaLabel}</a>
             </GlowButton>
@@ -168,7 +175,7 @@ export default function Hero({ blok }: HeroProps) {
         {/* Footnote */}
         <div
           ref={footnoteRef}
-          className="richtext-links text-fg-secondary text-[12px] leading-[1.4]"
+          className="richtext-links hero-footnote text-fg-secondary text-[12px] leading-[1.4]"
         >
           {hasFootnoteRichText && blok.footnote ? (
             <StoryblokRichText doc={blok.footnote} />

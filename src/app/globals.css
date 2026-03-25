@@ -244,6 +244,13 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
+/* Hide hero availability badge until GSAP reveal */
+.hero-availability-badge {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px); /* match GSAP start pos */
+}
+
 /* Hero headline characters start hidden */
 .hero-char {
   opacity: 0;
@@ -251,11 +258,25 @@ body {
   will-change: transform, opacity;
 }
 
-/* Hide hero body text until GSAP reveal */
-.hero-body-text p,
-.hero-body-text li {
+/* Hide hero body wrapper until GSAP reveal */
+.hero-body-text {
   opacity: 0;
-  transform: translateY(20px); /* match GSAP start pos */
+  visibility: hidden;
+  transform: translateY(15px); /* match GSAP start pos */
+}
+
+/* Hide hero body wrapper until GSAP reveal */
+.hero-cta {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px); /* match GSAP start pos */
+}
+
+/* Hide hero footnote until GSAP reveal */
+.hero-footnote {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px); /* match GSAP start pos */
 }
 
 /* Generic animated link styles:
