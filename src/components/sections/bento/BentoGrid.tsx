@@ -1,3 +1,4 @@
+import { Card, CardContent } from "@/components/ui/card";
 import type {
   BentoBlock,
   IntroCard,
@@ -32,8 +33,16 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
   console.log("blok", blok);
 
   return (
-    <section id={ctaTarget} className="h-screen bg-green-800">
-      <h1>Bento Grid</h1>
+    <section
+      id={ctaTarget}
+      className="p-gutter grid grid-cols-1 gap-4 bg-green-800 py-25 lg:grid-cols-3 lg:py-40"
+    >
+      <Card className="h-[75vh]">INTRO</Card>
+      <Card>TESTIMONIALS</Card>
+      <div className="grid grid-rows-2 gap-4">
+        <Card className="w-full">TECH STACK</Card>
+        <Card className="w-full">SERVICES</Card>
+      </div>
     </section>
   );
 }

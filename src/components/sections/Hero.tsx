@@ -81,6 +81,7 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
   const availabilityBadgeRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const imageOverlayRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
   const footnoteRef = useRef<HTMLDivElement>(null);
   const bodyTextRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
@@ -112,6 +113,7 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
     ctaRef,
     footnoteRef,
     imageOverlayRef,
+    imageRef,
     charsSelector: ".hero-char",
   });
 
@@ -192,6 +194,7 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
         {/* Profile image */}
         {imageSrc ? (
           <Image
+            ref={imageRef}
             src={imageSrc}
             alt={imageAlt}
             width={1000}
@@ -209,7 +212,7 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
         {/* Profile image overlay */}
         <div
           ref={imageOverlayRef}
-          className="bg-bg-secondary pointer-events-none absolute inset-0 z-10 hidden lg:block"
+          className="bg-bg-secondary pointer-events-none absolute inset-0 z-10 block"
         />
       </div>
     </section>

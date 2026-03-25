@@ -15,6 +15,7 @@ export default async function Home() {
   const bentoBlock: BentoBlock | undefined =
     pageContent.body?.find(isBentoBlock);
 
+  // normalized hero cta anchor link to be passed to hero (a) and bento (id) sections for match
   const ctaTarget =
     (heroBlock?.ctaLink ?? "bento").replace(/^#/, "").trim() || "bento";
 
