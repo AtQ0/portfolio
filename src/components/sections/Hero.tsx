@@ -1,7 +1,6 @@
 "use client";
 import { HeroBlock } from "@/types/storyblok";
 import AvailabilityBadge from "../ui/AvailabilityBadge";
-
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { StoryblokRichText } from "@storyblok/react";
@@ -16,7 +15,7 @@ type HeroProps = {
 export default function Hero({ blok }: HeroProps) {
   const isOpen = blok.signal ?? true;
   const closedText =
-    blok.signal_closed_text?.trim() || "Unavailable for new projects";
+    blok.signalClosedText?.trim() || "Unavailable for new projects";
   const headline =
     blok.headline?.trim() ||
     "Crafted experiences, designed to be beautiful and built to last.";
@@ -81,6 +80,7 @@ export default function Hero({ blok }: HeroProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const imageOverlayRef = useRef<HTMLDivElement>(null);
   const footnoteRef = useRef<HTMLDivElement>(null);
+  const bodyTextRef = useRef<HTMLDivElement>(null);
 
   // Patch rendered footnote links: external links open in new tab.
   useEffect(() => {
@@ -100,9 +100,11 @@ export default function Hero({ blok }: HeroProps) {
     });
   }, [blok.footnote]);
 
+  // Hero animation
   useHeroAnimation({
     sectionRef,
     headingRef,
+    bodyTextRef,
     imageOverlayRef,
     charsSelector: ".hero-char",
   });
@@ -112,13 +114,16 @@ export default function Hero({ blok }: HeroProps) {
   return (
     <section
       ref={sectionRef}
-      className="bg-bg-primary grid w-full overflow-hidden lg:grid-cols-2"
+      className="bg-bg-secondary grid w-full overflow-hidden lg:grid-cols-2"
     >
+      {/* Left column */}
       <div className="p-gutter flex h-screen flex-col justify-between gap-10">
-        {/* Content */}
+        {/* Availability badge */}
         <AvailabilityBadge isOpen={isOpen} closedText={closedText} />
 
+        {/* Content container */}
         <div className="@container/hero-content my-auto flex flex-col gap-7">
+          {/* Headline */}
           <h1
             className="text-fluid-36-64 max-w-[18ch] font-light text-pretty"
             ref={headingRef}
@@ -139,19 +144,28 @@ export default function Hero({ blok }: HeroProps) {
               </span>
             ))}
           </h1>
-          <div className="@md/hero-content:text-18 text-16 text-fg-secondary max-w-[32ch] min-[500px]:max-w-[40ch]">
+
+          {/* Body text */}
+          <div
+            ref={bodyTextRef}
+            className="@md/hero-content:text-18 text-16 hero-body-text text-fg-secondary max-w-[32ch] min-[500px]:max-w-[40ch]"
+          >
             {hasBodyRichText && blok.text ? (
               <StoryblokRichText doc={blok.text} />
             ) : (
               <p>{fallbackBodyText}</p>
             )}
           </div>
+
+          {/* CTA button */}
           <div className="mt-3 w-fit">
             <GlowButton type="button" asChild>
               <a href="#about">{ctaLabel}</a>
             </GlowButton>
           </div>
         </div>
+
+        {/* Footnote */}
         <div
           ref={footnoteRef}
           className="richtext-links text-fg-secondary text-[12px] leading-[1.4]"
@@ -163,8 +177,10 @@ export default function Hero({ blok }: HeroProps) {
           )}
         </div>
       </div>
-      {/* Profile image */}
+
+      {/* Right column */}
       <div className="bg-bg-primary relative w-full overflow-hidden lg:max-h-screen">
+        {/* Profile image */}
         {imageSrc ? (
           <Image
             src={imageSrc}
@@ -181,9 +197,10 @@ export default function Hero({ blok }: HeroProps) {
           </div>
         )}
 
+        {/* Profile image overlay */}
         <div
           ref={imageOverlayRef}
-          className="bg-bg-primary pointer-events-none absolute inset-0 z-10 hidden lg:block"
+          className="bg-bg-secondary pointer-events-none absolute inset-0 z-10 hidden lg:block"
         />
       </div>
     </section>

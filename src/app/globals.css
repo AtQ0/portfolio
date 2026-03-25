@@ -115,6 +115,8 @@
 @theme inline {
   --color-bg-primary: var(--active-bg-primary);
   --color-bg-secondary: var(--active-bg-secondary);
+  --color-bg-tertiary: var(--bg-white);
+  --color-bg-quaternary: var(--bg-bright-snow);
   --color-fg-primary: var(--active-fg-primary);
   --color-fg-secondary: var(--active-fg-secondary);
   --color-tea-green: var(--accent-tea-green);
@@ -247,6 +249,13 @@ body {
   opacity: 0;
   visibility: hidden;
   will-change: transform, opacity;
+}
+
+/* Hide hero body text until GSAP reveal */
+.hero-body-text p,
+.hero-body-text li {
+  opacity: 0;
+  transform: translateY(20px); /* match GSAP start pos */
 }
 
 /* Generic animated link styles:

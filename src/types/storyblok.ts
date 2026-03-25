@@ -30,7 +30,7 @@ export type HeroBlock = {
   headline?: string;
   media?: StoryblokAsset;
   signal?: boolean;
-  signal_closed_text?: string;
+  signalClosedText?: string;
   text?: StoryblokRichText;
   _uid: string;
   _editable?: string;
