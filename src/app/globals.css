@@ -56,8 +56,11 @@
   /* Active theme colors (dark default) */
   --active-bg-primary: var(--bg-black);
   --active-bg-secondary: var(--bg-onyx);
+  --active-bg-tertiary: var(--bg-white);
+  --active-bg-quaternary: var(--bg-bright-snow);
   --active-fg-primary: var(--fg-white);
   --active-fg-secondary: var(--fg-gray);
+  --active-fg-tertiary: var(--fg-black);
 
   /* Active font (default SaansVF) */
   --active-font: "SaansVF", system-ui, sans-serif;
@@ -115,10 +118,11 @@
 @theme inline {
   --color-bg-primary: var(--active-bg-primary);
   --color-bg-secondary: var(--active-bg-secondary);
-  --color-bg-tertiary: var(--bg-white);
-  --color-bg-quaternary: var(--bg-bright-snow);
+  --color-bg-tertiary: var(--active-bg-tertiary);
+  --color-bg-quaternary: var(--active-bg-quaternary);
   --color-fg-primary: var(--active-fg-primary);
   --color-fg-secondary: var(--active-fg-secondary);
+  --color-fg-tertiary: var(--active-fg-tertiary);
   --color-tea-green: var(--accent-tea-green);
   --color-light-coral: var(--accent-light-coral);
   --color-brilliant-azure: var(--accent-brilliant-azure);

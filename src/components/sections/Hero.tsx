@@ -7,6 +7,7 @@ import { StoryblokRichText } from "@storyblok/react";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 import { GlowButton } from "../ui/GlowButton";
 import Image from "next/image";
+import { getBgClass } from "@/lib/cmsTheme";
 
 type HeroProps = {
   blok: HeroBlock;
@@ -14,6 +15,7 @@ type HeroProps = {
 };
 
 export default function Hero({ blok, ctaTarget }: HeroProps) {
+  const background = blok.background ?? "bg-secondary";
   const isOpen = blok.signal ?? true;
   const closedText =
     blok.signalClosedText?.trim() || "Unavailable for new projects";
@@ -122,7 +124,10 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
   return (
     <section
       ref={sectionRef}
-      className="bg-bg-secondary grid w-full overflow-hidden lg:grid-cols-2"
+      className={cn(
+        "grid w-full overflow-hidden lg:grid-cols-2",
+        getBgClass(background, "bg-secondary"),
+      )}
     >
       {/* Left column */}
       <div className="p-gutter flex h-screen flex-col justify-between gap-10">
