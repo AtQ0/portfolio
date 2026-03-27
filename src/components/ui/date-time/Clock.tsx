@@ -8,7 +8,7 @@ type ClockProps = {
 };
 
 export function Clock({
-  timeZone = "Europe/London",
+  timeZone = "Europe/Stockholm",
   className = "block",
 }: ClockProps) {
   const rafRef = useRef<number | null>(null);
