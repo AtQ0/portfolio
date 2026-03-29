@@ -12,22 +12,22 @@ import {
 } from "@/components/ui/card";
 import type { IntroCard as IntroCardBlok } from "@/types/storyblok";
 
-type BentoIntroCardProps = {
+type IntroCardProps = {
   blok?: IntroCardBlok;
 };
 
 const FALLBACK_HEADLINE =
-  "Fullstack developer with over 2+ years of experience building end-to-end applications across the entire stack.";
+  "Fullstack developer with 2+ years of experience building thoughtful, well-crafted web applications built to last.";
 const FALLBACK_DESCRIPTION =
   "If you are looking to start a new web project get in touch to discuss your requirements with me in more detail.";
 const FALLBACK_CTA_LINK = "mail@atkobabic.com";
 const FALLBACK_CTA_TEXT = "Say hello";
 
-export default function BentoIntroCard({ blok }: BentoIntroCardProps) {
+export default function IntroCard({ blok }: IntroCardProps) {
   const background = blok?.background ?? "bg-secondary";
   const headline = blok?.headline ?? FALLBACK_HEADLINE;
   const description = blok?.description;
-  const ctaLink = (blok?.ctaLink?.trim() || FALLBACK_CTA_LINK) as string;
+  const ctaLink = blok?.ctaLink?.trim() || FALLBACK_CTA_LINK;
   const ctaText = (blok?.ctaText?.trim() || FALLBACK_CTA_TEXT) as string;
 
   return (
@@ -39,7 +39,7 @@ export default function BentoIntroCard({ blok }: BentoIntroCardProps) {
     >
       <div className="text-14 flex max-w-[40ch] flex-col gap-4">
         <CardHeader className="text-light-coral font-regular text-[24px]">
-          {headline}
+          <h2>{headline}</h2>
         </CardHeader>
 
         <CardContent className="flex flex-col">
@@ -47,7 +47,7 @@ export default function BentoIntroCard({ blok }: BentoIntroCardProps) {
             {description ? (
               <StoryblokRichText doc={description} />
             ) : (
-              FALLBACK_DESCRIPTION
+              <p>{FALLBACK_DESCRIPTION}</p>
             )}
           </div>
         </CardContent>

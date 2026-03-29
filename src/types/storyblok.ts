@@ -53,11 +53,18 @@ export type DateClock = {
 };
 
 export type TestimonialsCard = {
-  authorName?: string;
-  authorPosition?: string;
   background?: "bg-secondary" | "bg-quaternary";
   component: "TestimonialsCard";
-  testimonial?: StoryblokRichText;
+  testimonials?: TestimonialItem[];
+  _editable?: string;
+  _uid: string;
+};
+
+export type TestimonialItem = {
+  component: "TestimonialItem";
+  quote?: StoryblokRichText;
+  authorName?: string;
+  authorPosition?: string;
   _editable?: string;
   _uid: string;
 };

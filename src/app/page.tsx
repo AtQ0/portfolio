@@ -23,11 +23,13 @@ export default async function Home() {
   //console.log("bentoBlock", bentoBlock);
 
   return (
-    <main className="h-screen">
+    <div>
       {heroBlock ? <Hero blok={heroBlock} ctaTarget={ctaTarget} /> : null}
-      {bentoBlock ? (
-        <BentoGrid blok={bentoBlock} ctaTarget={ctaTarget} />
-      ) : null}
-    </main>
+      <article>
+        {bentoBlock ? (
+          <BentoGrid blok={bentoBlock} ctaTarget={ctaTarget} />
+        ) : null}
+      </article>
+    </div>
   );
 }

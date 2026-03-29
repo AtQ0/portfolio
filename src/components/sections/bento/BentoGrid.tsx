@@ -10,6 +10,7 @@ import type {
 import ClientLogos from "./ClientLogos";
 import { getBgClass } from "@/lib/cmsTheme";
 import IntroCard from "./IntroCard";
+import TestimonialCard from "./TestimonialCard";
 
 type BentoGridProps = {
   blok: BentoBlock;
@@ -43,6 +44,9 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
         getBgClass(bgBlockBento, "bg-primary"),
       )}
     >
+      <div className="sr-only">
+        <h1>Overview</h1>
+      </div>
       <div
         className={cn(
           "p-gutter grid grid-cols-1 gap-4 py-0",
@@ -54,14 +58,7 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
           <IntroCard blok={introCardBlok} />
         </div>
 
-        <Card
-          className={cn(
-            "md:col-span-2 md:row-start-2",
-            "lg:col-span-1 lg:col-start-2 lg:row-start-1",
-          )}
-        >
-          TESTIMONIALS
-        </Card>
+        <TestimonialCard blok={testimonialsCardBlok} />
 
         <div
           className={cn(
