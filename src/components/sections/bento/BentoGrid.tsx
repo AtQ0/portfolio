@@ -40,21 +40,22 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
     <section
       id={ctaTarget}
       className={cn(
-        "gap-gutter-md flex flex-col py-25 lg:py-40",
+        "gap-gutter-md p-gutter flex flex-col",
         getBgClass(bgBlockBento, "bg-primary"),
       )}
     >
       <div className="sr-only">
         <h1>Overview</h1>
       </div>
+
       <div
         className={cn(
-          "p-gutter grid grid-cols-1 gap-4 py-0",
-          "md:grid-cols-2",
-          "lg:grid-cols-3",
+          "grid grid-cols-1 gap-4 bg-amber-300",
+          "min-[800px]:grid-cols-2 min-[800px]:max-[1199px]:grid-rows-2",
+          "min-[1200px]:grid-cols-[clamp(250px,24%,300px)_minmax(0,1fr)_clamp(250px,24%,300px)] min-[1200px]:grid-rows-none",
         )}
       >
-        <div className="md:col-start-1 md:row-start-1 lg:col-start-1 lg:row-start-1">
+        <div className="min-[800px]:col-start-1 min-[800px]:row-start-1 min-[1200px]:col-start-1 min-[1200px]:row-start-1">
           <IntroCard blok={introCardBlok} />
         </div>
 
@@ -62,8 +63,8 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
 
         <div
           className={cn(
-            "grid grid-cols-1 gap-4 sm:grid-cols-2 md:col-start-2 md:row-start-1 md:grid-cols-1",
-            "lg:col-start-3 lg:row-start-1 lg:grid-cols-1",
+            "grid grid-cols-1 gap-4 min-[800px]:col-start-2 min-[800px]:row-start-1",
+            "min-[1200px]:col-start-3 min-[1200px]:row-start-1 min-[1200px]:grid-cols-1",
           )}
         >
           <Card className="w-full">TECH STACK</Card>

@@ -17,7 +17,7 @@ type IntroCardProps = {
 };
 
 const FALLBACK_HEADLINE =
-  "Fullstack developer with 2+ years of experience building thoughtful, well-crafted web applications built to last.";
+  "Developer with 2+ years building fullstack applications for the web.";
 const FALLBACK_DESCRIPTION =
   "If you are looking to start a new web project get in touch to discuss your requirements with me in more detail.";
 const FALLBACK_CTA_LINK = "mail@atkobabic.com";
@@ -33,13 +33,13 @@ export default function IntroCard({ blok }: IntroCardProps) {
   return (
     <Card
       className={cn(
-        "flex flex-col gap-9",
+        "flex w-full flex-col justify-between gap-9",
         getBgClass(background, "bg-secondary"),
       )}
     >
-      <div className="text-14 flex max-w-[40ch] flex-col gap-4">
-        <CardHeader className="text-light-coral font-regular text-[24px]">
-          <h2>{headline}</h2>
+      <div className="text-14 flex max-w-[40ch] flex-col gap-4 bg-pink-200">
+        <CardHeader className="text-light-coral font-regular bg-yellow-200 text-[24px]">
+          <h2 className="bg-red-400 leading-[1.4]">{headline}</h2>
         </CardHeader>
 
         <CardContent className="flex flex-col">
