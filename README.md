@@ -8,6 +8,11 @@ Ongoing portfolio website built with Next.js and Storyblok. The homepage is CMS-
 - Hero section - animated headline reveal, availability status, CTA anchor navigation
 - Bento section - intro card with local date/time and email CTA
 - Testimonials carousel - Keen Slider with CMS data plus local fallback testimonials
+- Strategy - TBD
+- Projects - TBD
+- FAQ - TBD
+- Play - TBD
+- Footer - TBD
 - Typed content model - strongly typed Storyblok blocks and guards in TypeScript
 
 ## Design
