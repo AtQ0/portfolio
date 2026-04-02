@@ -1,6 +1,6 @@
 ## Portfolio (Next.js + Storyblok)
 
-Portfolio website built with Next.js and Storyblok. The homepage is CMS-driven and assembled from reusable content blocks, animations, and carousels.
+Ongoing portfolio website built with Next.js and Storyblok. The homepage is CMS-driven and assembled from reusable content blocks, animations, and carousels.
 
 ## Features
 
