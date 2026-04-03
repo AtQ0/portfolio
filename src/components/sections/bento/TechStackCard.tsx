@@ -40,14 +40,17 @@ export default function TechStackCard({ blok }: TechStackCardProps) {
           {blok?.tech_items?.length ? (
             <ul className="flex flex-wrap gap-2">
               {blok.tech_items.map((item) => (
-                <li key={item._uid}>
+                <li
+                  key={item._uid}
+                  className="bg-bg-primary rounded-sm border border-white/40 p-2"
+                >
                   {item.icon?.filename ? (
                     <Image
                       src={item.icon.filename}
                       alt={item.icon.alt ?? ""}
                       width={32}
                       height={32}
-                      className="h-8 w-8 object-contain"
+                      className="h-7 w-7 object-contain"
                     />
                   ) : null}
                 </li>
