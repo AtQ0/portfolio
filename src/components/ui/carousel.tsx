@@ -178,20 +178,20 @@ export function Carousel<T>({
           <div className="flex items-center justify-end gap-2">
             <button
               type="button"
-              className="size-6 shrink-0 cursor-pointer opacity-30 transition-opacity duration-200 ease-out hover:opacity-100 focus:opacity-100"
+              className="size-6 shrink-0 cursor-pointer"
               onClick={() => sliderRef.current?.prev()}
             >
               <span className="sr-only">Go to previous item</span>
-              <ChevronLeftIcon className="text-fg-secondary size-full" />
+              <ChevronLeftIcon className="text-fg-secondary size-full transition-colors duration-200 ease-out hover:text-white focus-visible:text-white" />
             </button>
 
             <button
               type="button"
-              className="size-6 shrink-0 cursor-pointer opacity-30 transition-opacity duration-200 ease-out hover:opacity-100 focus:opacity-100"
+              className="size-6 shrink-0 cursor-pointer"
               onClick={() => sliderRef.current?.next()}
             >
               <span className="sr-only">Go to next item</span>
-              <ChevronRightIcon className="text-fg-secondary size-full" />
+              <ChevronRightIcon className="text-fg-secondary size-full transition-colors duration-200 ease-out hover:text-white focus-visible:text-white" />
             </button>
           </div>
         </div>

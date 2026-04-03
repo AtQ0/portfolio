@@ -37,9 +37,9 @@ export default function IntroCard({ blok }: IntroCardProps) {
         getBgClass(background, "bg-secondary"),
       )}
     >
-      <div className="text-14 flex max-w-[40ch] flex-col gap-4 bg-pink-200">
-        <CardHeader className="text-light-coral font-regular bg-yellow-200 text-[24px]">
-          <h2 className="bg-red-400">{headline}</h2>
+      <div className="text-14 flex max-w-[40ch] flex-col gap-4">
+        <CardHeader className="text-light-coral font-regular text-[24px]">
+          <h2>{headline}</h2>
         </CardHeader>
 
         <CardContent className="flex flex-col">

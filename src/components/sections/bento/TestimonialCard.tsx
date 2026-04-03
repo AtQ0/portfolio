@@ -9,6 +9,7 @@ import {
   mergeCmsTestimonialsWithFallbacks,
 } from "@/lib/testimonials";
 import { StoryblokRichText } from "@storyblok/react";
+import { getBgClass } from "@/lib/cmsTheme";
 
 type TestimonialCardProps = {
   blok?: TestimonialsCardBlok;
@@ -19,12 +20,14 @@ export default function TestimonialCard({ blok }: TestimonialCardProps) {
     blok?.testimonials,
     FALLBACK_TESTIMONIALS,
   );
+  const background = blok?.background ?? "bg-secondary";
 
   return (
     <Card
       className={cn(
         "col-span-1 min-[800px]:order-1 min-[800px]:col-span-2 min-[1200px]:col-span-1 min-[1200px]:col-start-2",
         "overflow-x-hidden px-6 py-6 md:px-14 md:py-10",
+        getBgClass(background, "bg-secondary"),
       )}
     >
       <Carousel

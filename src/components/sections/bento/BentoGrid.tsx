@@ -4,13 +4,14 @@ import type {
   BentoBlock,
   IntroCard as IntroCardBlok,
   ServicesCard,
-  TechStackCard,
+  TechStackCard as TechStackCardBlok,
   TestimonialsCard,
 } from "@/types/storyblok";
 import ClientLogos from "./ClientLogos";
 import { getBgClass } from "@/lib/cmsTheme";
 import IntroCard from "./IntroCard";
 import TestimonialCard from "./TestimonialCard";
+import TechStackCard from "./TechStackCard";
 
 type BentoGridProps = {
   blok: BentoBlock;
@@ -27,7 +28,7 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
   );
 
   const techStackCardBlok = blok.sections?.find(
-    (s): s is TechStackCard => s.component === "TechStackCard",
+    (s): s is TechStackCardBlok => s.component === "TechStackCard",
   );
 
   const servicesCardBlok = blok.sections?.find(
@@ -67,7 +68,7 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
             "min-[1200px]:col-start-3 min-[1200px]:row-start-1 min-[1200px]:grid-cols-1",
           )}
         >
-          <Card className="w-full">TECH STACK</Card>
+          <TechStackCard blok={techStackCardBlok} />
           <Card className="w-full">SERVICES</Card>
         </div>
       </div>
