@@ -144,7 +144,7 @@ export function Carousel<T>({
   return (
     <div
       className={cn(
-        "@container/carousel flex size-full flex-col justify-between gap-8 bg-gray-300 transition-opacity duration-500 ease-in-out",
+        "@container/carousel flex size-full flex-col justify-between transition-opacity duration-500 ease-in-out",
         !ready && "opacity-0",
       )}
     >

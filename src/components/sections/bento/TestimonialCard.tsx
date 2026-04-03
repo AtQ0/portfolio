@@ -23,23 +23,24 @@ export default function TestimonialCard({ blok }: TestimonialCardProps) {
   return (
     <Card
       className={cn(
-        "col-span-1 min-[800px]:max-[1199px]:order-1 min-[800px]:max-[1199px]:col-span-2 min-[1200px]:col-start-2",
-        "overflow-x-hidden bg-white px-6 py-6 md:px-10 md:py-10",
+        "col-span-1 min-[800px]:order-1 min-[800px]:col-span-2 min-[1200px]:col-span-1 min-[1200px]:col-start-2",
+        "overflow-x-hidden px-6 py-6 md:px-14 md:py-10",
       )}
     >
       <Carousel
         items={slides}
         controlsPosition="bottom"
         perView={1}
-        spacing={40}
-        renderSlide={(slide, _index, { progress: _progress }) => (
-          <figure className="@container/testimonial flex h-full flex-col items-start justify-between bg-amber-700">
-            <blockquote className="text-fg-secondary bg-pink-400">
+        spacing={60}
+        renderSlide={(slide) => (
+          <figure className="@container/testimonial flex h-full min-h-[380px] flex-col items-start justify-between min-[500px]:min-h-[320px]">
+            <blockquote className="text-fg-secondary">
               <div
                 className={cn(
                   "max-w-[40ch] text-2xl text-pretty",
                   "@md/testimonial:text-[26px] @lg/testimonial:text-3xl",
                   "[&_p:not(:last-child)]:mb-4",
+                  "[&_p]:text-fg-primary",
                 )}
               >
                 {"quoteDoc" in slide ? (
@@ -50,11 +51,13 @@ export default function TestimonialCard({ blok }: TestimonialCardProps) {
               </div>
             </blockquote>
 
-            <figcaption className="flex flex-col items-start bg-green-400">
-              <cite className="text-fg-secondary block text-lg not-italic">
+            <figcaption className="flex flex-col items-start pb-8">
+              <cite className="text-fg-primary block text-lg not-italic">
                 {slide.authorName}
               </cite>
-              <span className="block text-sm">{slide.authorPosition}</span>
+              <span className="text-fg-secondary block text-sm">
+                {slide.authorPosition}
+              </span>
             </figcaption>
           </figure>
         )}

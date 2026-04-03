@@ -50,7 +50,7 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
 
       <div
         className={cn(
-          "grid grid-cols-1 gap-4 bg-amber-300",
+          "grid grid-cols-1 gap-4",
           "min-[800px]:grid-cols-2 min-[800px]:max-[1199px]:grid-rows-2",
           "min-[1200px]:grid-cols-[clamp(250px,24%,300px)_minmax(0,1fr)_clamp(250px,24%,300px)] min-[1200px]:grid-rows-none",
         )}
