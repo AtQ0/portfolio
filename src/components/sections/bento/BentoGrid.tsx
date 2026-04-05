@@ -12,6 +12,7 @@ import { getBgClass } from "@/lib/cmsTheme";
 import IntroCard from "./IntroCard";
 import TestimonialCard from "./TestimonialCard";
 import TechStackCard from "./TechStackCard";
+import ServiceCard from "./ServiceCard";
 
 type BentoGridProps = {
   blok: BentoBlock;
@@ -69,7 +70,7 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
           )}
         >
           <TechStackCard blok={techStackCardBlok} />
-          <Card className="w-full">SERVICES</Card>
+          <ServiceCard blok={servicesCardBlok} />
         </div>
       </div>
 

@@ -4,6 +4,7 @@ import { StoryblokRichText } from "@storyblok/react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import type { TechStackCard as TechStackCardBlok } from "@/types/storyblok";
 import { TechStackItemIcon } from "./TechStackItemIcon";
+import { Marquee } from "@/components/ui/Marquee";
 
 type TechStackCardProps = {
   blok?: TechStackCardBlok;
@@ -25,7 +26,7 @@ export default function TechStackCard({ blok }: TechStackCardProps) {
   return (
     <Card
       className={cn(
-        "flex w-full flex-col",
+        "flex w-full flex-col gap-2",
         getBgClass(background, "bg-secondary"),
       )}
     >
@@ -33,23 +34,29 @@ export default function TechStackCard({ blok }: TechStackCardProps) {
         <h2 className="text-fg-primary font-regular text-[18px]">{headline}</h2>
       </CardHeader>
 
-      <CardContent className="flex flex-col gap-4">
+      <CardContent className="flex flex-col gap-6">
         <div className="text-fg-secondary">
           {text ? <StoryblokRichText doc={text} /> : <p>{FALLBACK_TEXT}</p>}
         </div>
 
         <div>
           {blok?.tech_items?.length ? (
-            <ul className="flex flex-wrap gap-2">
-              {blok.tech_items.map((item) => (
-                <li
-                  key={item._uid}
-                  className="bg-bg-primary rounded-sm border border-white/40 p-2"
-                >
-                  <TechStackItemIcon item={item} />
-                </li>
-              ))}
-            </ul>
+            <Marquee gapClassName="gap-2" durationSeconds={40}>
+              <ul className="flex shrink-0 flex-nowrap gap-2">
+                {blok.tech_items.map((item) => (
+                  <li
+                    key={item._uid}
+                    className={cn(
+                      "bg-bg-primary rounded-sm border border-white/40 p-2",
+                      "transition-[border-color] duration-200",
+                      "hover:border-fg-primary",
+                    )}
+                  >
+                    <TechStackItemIcon item={item} />
+                  </li>
+                ))}
+              </ul>
+            </Marquee>
           ) : null}
         </div>
       </CardContent>

@@ -317,6 +317,15 @@ body {
     50% 1px;
 }
 
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 /* Shadcn CSS dark mode variables */
 .dark {
   --background: oklch(0.145 0 0);
