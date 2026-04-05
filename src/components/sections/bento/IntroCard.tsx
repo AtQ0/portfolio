@@ -25,7 +25,7 @@ const FALLBACK_CTA_TEXT = "Say hello";
 
 export default function IntroCard({ blok }: IntroCardProps) {
   const background = blok?.background ?? "bg-secondary";
-  const headline = blok?.headline ?? FALLBACK_HEADLINE;
+  const headline = blok?.headline?.trim() ?? FALLBACK_HEADLINE;
   const description = blok?.description;
   const ctaLink = blok?.ctaLink?.trim() || FALLBACK_CTA_LINK;
   const ctaText = (blok?.ctaText?.trim() || FALLBACK_CTA_TEXT) as string;
@@ -33,7 +33,7 @@ export default function IntroCard({ blok }: IntroCardProps) {
   return (
     <Card
       className={cn(
-        "flex w-full flex-col justify-between gap-9",
+        "flex h-full w-full flex-col justify-between gap-9",
         getBgClass(background, "bg-secondary"),
       )}
     >

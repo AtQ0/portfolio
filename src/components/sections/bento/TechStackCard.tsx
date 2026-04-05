@@ -3,7 +3,7 @@ import { getBgClass } from "@/lib/cmsTheme";
 import { StoryblokRichText } from "@storyblok/react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import type { TechStackCard as TechStackCardBlok } from "@/types/storyblok";
-import Image from "next/image";
+import { TechStackItemIcon } from "./TechStackItemIcon";
 
 type TechStackCardProps = {
   blok?: TechStackCardBlok;
@@ -15,9 +15,13 @@ const FALLBACK_TEXT =
 
 export default function TechStackCard({ blok }: TechStackCardProps) {
   const background = blok?.background ?? "bg-secondary";
-  const headline = blok?.headline ?? FALLBACK_HEADLINE;
+  const headline = blok?.headline?.trim() ?? FALLBACK_HEADLINE;
   const text = blok?.text;
+
   console.log(blok);
+  console.log("tech_items", blok?.tech_items);
+  console.log("first item", blok?.tech_items?.[0]);
+
   return (
     <Card
       className={cn(
@@ -30,12 +34,10 @@ export default function TechStackCard({ blok }: TechStackCardProps) {
       </CardHeader>
 
       <CardContent className="flex flex-col gap-4">
-        {/* rich text */}
         <div className="text-fg-secondary">
           {text ? <StoryblokRichText doc={text} /> : <p>{FALLBACK_TEXT}</p>}
         </div>
 
-        {/* marquee row */}
         <div>
           {blok?.tech_items?.length ? (
             <ul className="flex flex-wrap gap-2">
@@ -44,15 +46,7 @@ export default function TechStackCard({ blok }: TechStackCardProps) {
                   key={item._uid}
                   className="bg-bg-primary rounded-sm border border-white/40 p-2"
                 >
-                  {item.icon?.filename ? (
-                    <Image
-                      src={item.icon.filename}
-                      alt={item.icon.alt ?? ""}
-                      width={32}
-                      height={32}
-                      className="h-7 w-7 object-contain"
-                    />
-                  ) : null}
+                  <TechStackItemIcon item={item} />
                 </li>
               ))}
             </ul>

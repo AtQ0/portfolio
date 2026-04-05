@@ -82,6 +82,7 @@ export type TechStackCard = {
 export type TechItem = {
   background?: "bg-primary" | "bg-tertiary";
   component: "TechItem";
+  title?: string;
   icon?: StoryblokAsset;
   stroke?: "fg-secondary" | "tea-green";
   _editable?: string;

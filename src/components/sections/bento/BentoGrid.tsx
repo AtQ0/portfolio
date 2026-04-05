@@ -41,7 +41,7 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
     <section
       id={ctaTarget}
       className={cn(
-        "gap-gutter-md p-gutter flex flex-col",
+        "gap-gutter-md px-gutter flex flex-col py-[calc(var(--spacing-gutter)*2)]",
         getBgClass(bgBlockBento, "bg-primary"),
       )}
     >
