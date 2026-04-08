@@ -47,14 +47,16 @@ export default function ServiceCard({ blok }: ServiceCardProps) {
         <div className="text-fg-secondary">
           {text ? <StoryblokRichText doc={text} /> : <p>{FALLBACK_TEXT}</p>}
         </div>
-        <div>
-          <Image src={artworkSrc} alt={artworkAlt} width={150} height={150} />
-        </div>
-        <div className="flex w-fit items-start gap-2 drop-shadow-md transition-transform ease-in-out">
-          <Image src={overlayIcon} alt="" width={20} height={20} />
-          <span className="bg-light-coral text-12 text-fg-tertiary mt-5 -ml-2 inline-block rounded-sm px-1.5 py-0 font-semibold">
-            {overlayLabel}
-          </span>
+        <div className="relative flex justify-center">
+          <div>
+            <Image src={artworkSrc} alt={artworkAlt} width={150} height={150} />
+          </div>
+          <div className="absolute right-0 bottom-[-10px] flex w-fit items-start gap-2 bg-pink-300 drop-shadow-md transition-transform ease-in-out">
+            <Image src={overlayIcon} alt="" width={20} height={20} />
+            <span className="bg-light-coral text-12 text-fg-tertiary mt-5 -ml-2 inline-block rounded-sm px-1.5 py-0 font-semibold">
+              {overlayLabel}
+            </span>
+          </div>
         </div>
       </CardContent>
     </Card>

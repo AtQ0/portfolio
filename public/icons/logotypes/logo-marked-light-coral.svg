@@ -3,8 +3,8 @@
 
 <svg
    width="29.381603mm"
-   height="19.168034mm"
-   viewBox="0 0 29.381603 19.168034"
+   height="19.939735mm"
+   viewBox="0 0 29.381603 19.939735"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
@@ -24,8 +24,8 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="2.9531033"
-     inkscape:cx="24.042505"
-     inkscape:cy="67.725365"
+     inkscape:cx="123.09085"
+     inkscape:cy="84.31808"
      inkscape:window-width="1440"
      inkscape:window-height="830"
      inkscape:window-x="-6"
@@ -38,10 +38,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-71.4432,-73.858617)">
+     transform="translate(-95.779167,-93.662502)">
     <g
        id="g2"
-       transform="translate(-58.367207,2.9575547)">
+       transform="translate(-34.03124,22.76144)">
       <g
          id="g1">
         <path
@@ -111,27 +111,27 @@
       </g>
     </g>
     <g
-       id="g4"
-       transform="translate(-58.441559,2.9673434)">
+       id="g3"
+       transform="translate(26.458331,-47.624993)">
       <rect
-         style="fill:#3f8ae2;fill-opacity:1;stroke:none;stroke-width:0.159799"
+         style="fill:#3f8ae2;fill-opacity:1;stroke:none;stroke-width:0.206428"
          id="rect1"
-         width="9.8927879"
-         height="2.5502741"
-         x="139.9724"
-         y="87.509033"
-         rx="0.62697196" />
+         width="13.820688"
+         height="3.0462303"
+         x="76.884949"
+         y="158.181"
+         rx="0.60000002" />
       <text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.453px;font-family:Inter;-inkscape-font-specification:'Inter, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.181801;stroke-opacity:1"
-         x="140.87878"
-         y="89.307442"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Inter;-inkscape-font-specification:'Inter, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.181801;stroke-opacity:1"
+         x="77.772766"
+         y="160.51793"
          id="text4"><tspan
            sodipodi:role="line"
            id="tspan4"
-           style="stroke-width:0.181801"
-           x="140.87878"
-           y="89.307442">110.3 x 60.7</tspan></text>
+           style="font-size:2.11667px;stroke-width:0.181801"
+           x="77.772766"
+           y="160.51793">110.3 x 60.7</tspan></text>
     </g>
   </g>
 </svg>
