@@ -19,10 +19,6 @@ export default function TechStackCard({ blok }: TechStackCardProps) {
   const headline = blok?.headline?.trim() ?? FALLBACK_HEADLINE;
   const text = blok?.text;
 
-  console.log(blok);
-  console.log("tech_items", blok?.tech_items);
-  console.log("first item", blok?.tech_items?.[0]);
-
   return (
     <Card
       className={cn(

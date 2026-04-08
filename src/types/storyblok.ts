@@ -26,7 +26,7 @@ export type HeroBlock = {
 export type BentoBlock = {
   background?: "bg-primary" | "bg-tertiary";
   component: "block_bento";
-  sections?: Array<IntroCard | TestimonialsCard | TechStackCard | ServicesCard>;
+  sections?: Array<IntroCard | TestimonialsCard | TechStackCard | ServiceCard>;
   _editable?: string;
   _uid: string;
 };
@@ -89,10 +89,12 @@ export type TechItem = {
   _uid: string;
 };
 
-export type ServicesCard = {
+export type ServiceCard = {
   animationSVG?: StoryblokAsset;
   background?: "bg-secondary" | "bg-quaternary";
-  component: "ServicesCard";
+  component: "ServiceCard";
+  artworkSVG?: StoryblokAsset;
+  overlayLabel?: string;
   headline?: string;
   text?: StoryblokRichText;
   _editable?: string;

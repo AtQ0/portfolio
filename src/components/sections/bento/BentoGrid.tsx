@@ -1,9 +1,8 @@
 import { cn } from "@/lib/utils";
-import { Card } from "@/components/ui/card";
 import type {
   BentoBlock,
   IntroCard as IntroCardBlok,
-  ServicesCard,
+  ServiceCard as ServiceCardBlok,
   TechStackCard as TechStackCardBlok,
   TestimonialsCard,
 } from "@/types/storyblok";
@@ -32,8 +31,8 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
     (s): s is TechStackCardBlok => s.component === "TechStackCard",
   );
 
-  const servicesCardBlok = blok.sections?.find(
-    (s): s is ServicesCard => s.component === "ServicesCard",
+  const serviceCardBlok = blok.sections?.find(
+    (s): s is ServiceCardBlok => s.component === "ServiceCard",
   );
 
   const bgBlockBento = blok.background ?? "bg-primary";
@@ -70,7 +69,7 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
           )}
         >
           <TechStackCard blok={techStackCardBlok} />
-          <ServiceCard blok={servicesCardBlok} />
+          <ServiceCard blok={serviceCardBlok} />
         </div>
       </div>
 
