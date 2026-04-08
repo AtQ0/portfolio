@@ -326,6 +326,24 @@ body {
   }
 }
 
+.marquee-fade {
+  --marquee-fade-size: 128px;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black var(--marquee-fade-size),
+    black calc(100% - var(--marquee-fade-size)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black var(--marquee-fade-size),
+    black calc(100% - var(--marquee-fade-size)),
+    transparent 100%
+  );
+}
+
 /* Shadcn CSS dark mode variables */
 .dark {
   --background: oklch(0.145 0 0);

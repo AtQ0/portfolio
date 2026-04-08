@@ -39,10 +39,15 @@ export default function TechStackCard({ blok }: TechStackCardProps) {
           {text ? <StoryblokRichText doc={text} /> : <p>{FALLBACK_TEXT}</p>}
         </div>
 
-        <div>
+        {/* Negative margin to bleed the marquee past the edges */}
+        <div className="-mx-6">
           {blok?.tech_items?.length ? (
-            <Marquee gapClassName="gap-2" durationSeconds={40}>
-              <ul className="flex shrink-0 flex-nowrap gap-2">
+            <Marquee
+              gapClassName="gap-3"
+              durationSeconds={30}
+              className="marquee-fade"
+            >
+              <ul className="flex shrink-0 flex-nowrap gap-3">
                 {blok.tech_items.map((item) => (
                   <li
                     key={item._uid}
