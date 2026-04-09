@@ -26,7 +26,9 @@ export type HeroBlock = {
 export type BentoBlock = {
   background?: "bg-primary" | "bg-tertiary";
   component: "block_bento";
-  sections?: Array<IntroCard | TestimonialsCard | TechStackCard | ServiceCard>;
+  sections?: Array<
+    IntroCard | TestimonialsCard | TechStackCard | ServiceCard | ClientLogos
+  >;
   _editable?: string;
   _uid: string;
 };
@@ -101,6 +103,32 @@ export type ServiceCard = {
   _uid: string;
 };
 
+export type ClientLogos = {
+  background?: "bg-secondary" | "bg-quaternary";
+  component: "ClientLogos";
+  client_logo_items?: Array<ClientLogoItem>;
+  _editable?: string;
+  _uid: string;
+};
+
+export type ClientLogoItem = {
+  background?: "bg-secondary" | "bg-quaternary";
+  component: "ClientLogoItem";
+  logo?: StoryblokAsset;
+  link?: string;
+  _editable?: string;
+  _uid: string;
+};
+
+export type StrategyBlock = {
+  background?: "bg-secondary" | "bg-quaternary";
+  component: "StrategyBlock";
+  headline?: string;
+  text?: StoryblokRichText;
+  _editable?: string;
+  _uid: string;
+};
+
 export type StoryblokRichText = SbRichTextNode<ReactElement>;
 
 export type StoryblokAsset = {
@@ -129,3 +157,7 @@ export const isHeroBlock = (
 export const isBentoBlock = (
   block: BentoBlock | UnknownBlock,
 ): block is BentoBlock => block.component === "block_bento";
+
+export const isStrategyBlock = (
+  block: StrategyBlock | UnknownBlock,
+): block is StrategyBlock => block.component === "block_strategy";

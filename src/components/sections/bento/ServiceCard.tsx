@@ -16,8 +16,9 @@ const FALLBACK_HEADLINE = "Web design";
 const FALLBACK_TEXT =
   "Using tools such as Figma I can create bespoke pixel-perfect web design.";
 const FALLBACK_OVERLAY_LABEL = "Atko B.";
-const FALLBACK_ARTWORK_SVG = "/icons/logotypes/logo-marked-light-coral.svg";
-const OVERLAY_ICON = "/icons/logotypes/figma-pointer.svg";
+const FALLBACK_ARTWORK_SVG =
+  "/icons/logotypes/atkobabic/logo-marked-light-coral.svg";
+const OVERLAY_ICON = "/icons/logotypes/figma/figma-pointer.svg";
 const POINTER_SIZE = 20;
 
 export default function ServiceCard({ blok }: ServiceCardProps) {

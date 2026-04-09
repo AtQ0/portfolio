@@ -54,19 +54,28 @@ page (Content)
  │         │              ├─ background  → Single-Option (field)
  │         │              └─ stroke      → Single-Option (field)
  │         │
- │         └─ ServiceCard (Nestable block)
+ │         ├─ ServiceCard (Nestable block)
+ │         │    ├─ background        → Single-Option (field)
+ │         │    ├─ headline          → Text (field)
+ │         │    ├─ text              → Richtext / Textarea (field)
+ │         │    ├─ artworkSVG        → Asset / Image (field)   # main artwork from Storyblok
+ │         │    └─ overlayLabel      → Text (field)            # label text from Storyblok
+ │         │
+ │         │    (hardcoded in frontend, not Storyblok fields)
+ │         │    ├─ interactive overlay icon SVG (e.g. pointer)
+ │         │    └─ animation logic (CSS/GSAP)
+ │         │
+ │         └─ ClientLogos (Nestable block)
  │              ├─ background        → Single-Option (field)
- │              ├─ headline          → Text (field)
- │              ├─ text              → Richtext / Textarea (field)
- │              ├─ artworkSVG        → Asset / Image (field)   # main artwork from Storyblok
- │              └─ overlayLabel      → Text (field)            # label text from Storyblok
- │
- │              (hardcoded in frontend, not Storyblok fields)
- │              ├─ interactive overlay icon SVG (e.g. pointer)
- │              └─ animation logic (CSS/GSAP)
+ │              └─ clientLogoItem    → Blocks field
+ │                        ├─ logo        → Asset / Image (field)
+ │                        └─ link        → Text (field)
  │
  ├─ block_strategy (Nestable block)
- │    └─ background          → Single-Option (field)
+ │    ├─ background        → Single-Option (field)
+ │    ├─ headline          → Text (field)
+ │    └─ text              → Richtext / Textarea (field)
+ │
  ├─ block_projects (Nestable block)
  │    └─ background          → Single-Option (field)
  ├─ block_faq (Nestable block)
