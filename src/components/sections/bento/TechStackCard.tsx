@@ -30,7 +30,7 @@ export default function TechStackCard({ blok }: TechStackCardProps) {
         <h2 className="text-fg-primary font-regular text-[18px]">{headline}</h2>
       </CardHeader>
 
-      <CardContent className="flex flex-col gap-6">
+      <CardContent className="flex flex-col gap-8">
         <div className="text-fg-secondary">
           {text ? <StoryblokRichText doc={text} /> : <p>{FALLBACK_TEXT}</p>}
         </div>

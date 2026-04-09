@@ -64,8 +64,10 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
 
         <div
           className={cn(
-            "grid grid-cols-1 gap-4 min-[800px]:col-start-2 min-[800px]:row-start-1",
-            "min-[1200px]:col-start-3 min-[1200px]:row-start-1 min-[1200px]:grid-cols-1",
+            "grid grid-cols-1 gap-4",
+            "min-[600px]:max-[799px]:grid-cols-2",
+            "min-[800px]:col-start-2 min-[800px]:row-start-1",
+            "min-[1200px]:col-start-3 min-[1200px]:row-start-1",
           )}
         >
           <TechStackCard blok={techStackCardBlok} />
@@ -73,7 +75,7 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
         </div>
       </div>
 
-      <ClientLogos />
+      <ClientLogos className="-mx-gutter" />
     </section>
   );
 }
