@@ -104,7 +104,7 @@ export type ServiceCard = {
 };
 
 export type ClientLogos = {
-  background?: "bg-secondary" | "bg-quaternary";
+  background?: "bg-primary" | "bg-tertiary";
   component: "ClientLogos";
   client_logo_items?: Array<ClientLogoItem>;
   _editable?: string;
@@ -112,7 +112,7 @@ export type ClientLogos = {
 };
 
 export type ClientLogoItem = {
-  background?: "bg-secondary" | "bg-quaternary";
+  background?: "bg-primary" | "bg-tertiary";
   component: "ClientLogoItem";
   logo?: StoryblokAsset;
   link?: string;

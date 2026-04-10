@@ -44,8 +44,8 @@ export default function TechStackCard({ blok }: TechStackCardProps) {
         <div className="-mx-6">
           {blok?.tech_items?.length ? (
             <Marquee
-              gapClassName="gap-3"
-              durationSeconds={30}
+              loopSeamClassName="pe-3"
+              durationSeconds={35}
               className="marquee-fade"
             >
               <ul className="flex shrink-0 flex-nowrap gap-3">

@@ -2,9 +2,10 @@ import { cn } from "@/lib/utils";
 import type {
   BentoBlock,
   IntroCard as IntroCardBlok,
+  TestimonialsCard,
   ServiceCard as ServiceCardBlok,
   TechStackCard as TechStackCardBlok,
-  TestimonialsCard,
+  ClientLogos as ClientLogosBlok,
 } from "@/types/storyblok";
 import ClientLogos from "./ClientLogos";
 import { getBgClass } from "@/lib/cmsTheme";
@@ -33,6 +34,10 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
 
   const serviceCardBlok = blok.sections?.find(
     (s): s is ServiceCardBlok => s.component === "ServiceCard",
+  );
+
+  const clientLogosBlok = blok.sections?.find(
+    (s): s is ClientLogosBlok => s.component === "ClientLogos",
   );
 
   const bgBlockBento = blok.background ?? "bg-primary";
@@ -75,7 +80,7 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
         </div>
       </div>
 
-      <ClientLogos className="-mx-gutter" />
+      <ClientLogos blok={clientLogosBlok} className="-mx-gutter" />
     </section>
   );
 }

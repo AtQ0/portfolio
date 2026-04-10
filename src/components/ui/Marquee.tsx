@@ -20,8 +20,8 @@ function usePrefersReducedMotion() {
 
 export type MarqueeProps = React.ComponentProps<"div"> & {
   children: React.ReactNode;
-  durationSeconds?: number; /* Seconds for one full loop */
-  gapClassName?: string; /* Gap between items */
+  durationSeconds?: number;
+  loopSeamClassName?: string;
   pauseOnHover?: boolean;
   direction?: "left" | "right";
 };
@@ -32,7 +32,7 @@ export const Marquee = React.forwardRef<HTMLDivElement, MarqueeProps>(
       className,
       children,
       durationSeconds = 40,
-      gapClassName = "gap-2",
+      loopSeamClassName = "pe-2",
       pauseOnHover = true,
       direction = "left",
       onMouseEnter,
@@ -48,6 +48,17 @@ export const Marquee = React.forwardRef<HTMLDivElement, MarqueeProps>(
     const [focusInside, setFocusInside] = React.useState(false);
 
     const containerRef = React.useRef<HTMLDivElement | null>(null);
+
+    const syncPointerAndFocusFromDom = React.useCallback(() => {
+      const root = containerRef.current;
+      if (!root) return;
+      setPointerInside(root.matches(":hover"));
+      setFocusInside(
+        typeof document !== "undefined" &&
+          document.activeElement instanceof Node &&
+          root.contains(document.activeElement),
+      );
+    }, []);
 
     React.useLayoutEffect(() => {
       const el = containerRef.current;
@@ -91,11 +102,41 @@ export const Marquee = React.forwardRef<HTMLDivElement, MarqueeProps>(
       };
     }, [reduceMotion, pauseOnHover]);
 
+    React.useEffect(() => {
+      if (reduceMotion || !pauseOnHover) return;
+
+      const onReturnToTab = () => {
+        if (document.visibilityState !== "visible") return;
+        requestAnimationFrame(() => {
+          const root = containerRef.current;
+          if (!root) return;
+
+          const ae = document.activeElement;
+          if (
+            ae instanceof HTMLAnchorElement &&
+            root.contains(ae) &&
+            ae.target === "_blank"
+          ) {
+            ae.blur();
+          }
+          syncPointerAndFocusFromDom();
+        });
+      };
+
+      document.addEventListener("visibilitychange", onReturnToTab);
+      window.addEventListener("pageshow", onReturnToTab);
+
+      return () => {
+        document.removeEventListener("visibilitychange", onReturnToTab);
+        window.removeEventListener("pageshow", onReturnToTab);
+      };
+    }, [reduceMotion, pauseOnHover, syncPointerAndFocusFromDom]);
+
     if (reduceMotion) {
       return (
         <div
           ref={containerRef}
-          className={cn("flex w-full flex-wrap", gapClassName, className)}
+          className={cn("flex w-full flex-wrap", className)}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           onFocus={onFocus}
@@ -108,11 +149,21 @@ export const Marquee = React.forwardRef<HTMLDivElement, MarqueeProps>(
     }
 
     const paused = pauseOnHover && (pointerInside || focusInside);
+    const stripClassName = cn("flex shrink-0", loopSeamClassName);
 
     return (
       <div
         ref={containerRef}
         className={cn("min-w-0 overflow-hidden", className)}
+        onClickCapture={(e) => {
+          const a = (e.target as HTMLElement | null)?.closest("a");
+          if (!(a instanceof HTMLAnchorElement) || a.target !== "_blank")
+            return;
+          queueMicrotask(() => {
+            a.blur();
+            setPointerInside(false);
+          });
+        }}
         onMouseEnter={(e) => {
           onMouseEnter?.(e);
           if (pauseOnHover) setPointerInside(true);
@@ -126,7 +177,7 @@ export const Marquee = React.forwardRef<HTMLDivElement, MarqueeProps>(
         {...props}
       >
         <div
-          className={cn("flex w-max shrink-0", gapClassName)}
+          className="flex w-max shrink-0"
           style={{
             animationName: "marquee-scroll",
             animationDuration: `${durationSeconds}s`,
@@ -136,8 +187,8 @@ export const Marquee = React.forwardRef<HTMLDivElement, MarqueeProps>(
             animationPlayState: paused ? "paused" : "running",
           }}
         >
-          <div className={cn("flex shrink-0", gapClassName)}>{children}</div>
-          <div className={cn("flex shrink-0", gapClassName)} aria-hidden>
+          <div className={stripClassName}>{children}</div>
+          <div className={stripClassName} aria-hidden>
             {children}
           </div>
         </div>

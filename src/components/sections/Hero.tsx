@@ -28,7 +28,7 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
     "Crafted experiences, designed to be beautiful and built to last.";
 
   const fallbackBodyText =
-    "I’m a freelance fullstack developer building with modern web technologies from my studio in Sweden.";
+    "I’m a fullstack developer building digital products with modern web technologies from my studio in Sweden.";
 
   const ctaLabel = blok.cta?.trim() || "Find out more";
 
@@ -168,7 +168,7 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
           {/* Body text */}
           <div
             ref={bodyTextRef}
-            className="@md/hero-content:text-18 text-16 hero-body-text text-fg-secondary max-w-[32ch] min-[500px]:max-w-[40ch]"
+            className="@md/hero-content:text-18 text-16 hero-body-text text-fg-secondary max-w-[30ch] min-[500px]:max-w-[40ch]"
           >
             {resolvedBody.kind === "richtext" ? (
               <StoryblokRichText doc={resolvedBody.doc} />
