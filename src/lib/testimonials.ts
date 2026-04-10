@@ -1,4 +1,5 @@
 import type { StoryblokRichText, TestimonialItem } from "@/types/storyblok";
+import { hasRichTextContent } from "@/lib/storyblokRichText";
 
 export type FallbackTestimonial = {
   id: string;
@@ -46,27 +47,6 @@ export type ResolvedTestimonialSlide =
       authorPosition: string;
     };
 
-function richTextHasText(node: unknown): boolean {
-  if (!node || typeof node !== "object") return false;
-  const n = node as { type?: string; text?: string; content?: unknown[] };
-  if (
-    n.type === "text" &&
-    typeof n.text === "string" &&
-    n.text.trim().length > 0
-  ) {
-    return true;
-  }
-  if (Array.isArray(n.content)) {
-    return n.content.some((child) => richTextHasText(child));
-  }
-  return false;
-}
-
-function isStoryblokRichTextEmpty(doc: StoryblokRichText | undefined): boolean {
-  if (doc == null) return true;
-  return !richTextHasText(doc);
-}
-
 function isCompleteCmsTestimonial(
   row: TestimonialItem | undefined,
 ): row is TestimonialItem & {
@@ -76,7 +56,7 @@ function isCompleteCmsTestimonial(
 } {
   if (!row?._uid) return false;
   if (!row.authorName?.trim() || !row.authorPosition?.trim()) return false;
-  if (isStoryblokRichTextEmpty(row.quote)) return false;
+  if (!hasRichTextContent(row.quote)) return false;
   return true;
 }
 
@@ -86,6 +66,7 @@ export function mergeCmsTestimonialsWithFallbacks(
 ): ResolvedTestimonialSlide[] {
   return fallbacks.map((fb, index) => {
     const row = cms?.[index];
+
     if (isCompleteCmsTestimonial(row)) {
       return {
         key: row._uid,
@@ -94,6 +75,7 @@ export function mergeCmsTestimonialsWithFallbacks(
         authorPosition: row.authorPosition,
       };
     }
+
     return {
       key: fb.id,
       fallbackQuote: fb.quote,

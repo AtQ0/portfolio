@@ -1,8 +1,14 @@
 import Hero from "@/components/sections/Hero";
+import Strategy from "@/components/sections/Strategy";
 import BentoGrid from "@/components/sections/bento/BentoGrid";
 import { getStoryblokApi } from "@/lib/storyblok";
-import type { PageContent, HeroBlock, BentoBlock } from "@/types/storyblok";
-import { isBentoBlock, isHeroBlock } from "@/types/storyblok";
+import type {
+  PageContent,
+  HeroBlock,
+  BentoBlock,
+  StrategyBlock,
+} from "@/types/storyblok";
+import { isBentoBlock, isHeroBlock, isStrategyBlock } from "@/types/storyblok";
 
 export default async function Home() {
   const storyblokApi = getStoryblokApi();
@@ -14,6 +20,8 @@ export default async function Home() {
   const heroBlock: HeroBlock | undefined = pageContent.body?.find(isHeroBlock);
   const bentoBlock: BentoBlock | undefined =
     pageContent.body?.find(isBentoBlock);
+  const strategyBlock: StrategyBlock | undefined =
+    pageContent.body?.find(isStrategyBlock);
 
   // normalized hero cta anchor link to be passed to hero (a) and bento (id) sections for match
   const ctaTarget =
@@ -21,15 +29,17 @@ export default async function Home() {
 
   //console.log("pageContent", pageContent);
   //console.log("bentoBlock", bentoBlock);
+  console.log("strategyBlock", strategyBlock);
 
   return (
     <div>
       {heroBlock ? <Hero blok={heroBlock} ctaTarget={ctaTarget} /> : null}
-      <article>
-        {bentoBlock ? (
-          <BentoGrid blok={bentoBlock} ctaTarget={ctaTarget} />
-        ) : null}
-      </article>
+
+      {bentoBlock ? (
+        <BentoGrid blok={bentoBlock} ctaTarget={ctaTarget} />
+      ) : null}
+
+      {strategyBlock ? <Strategy blok={strategyBlock} /> : null}
     </div>
   );
 }

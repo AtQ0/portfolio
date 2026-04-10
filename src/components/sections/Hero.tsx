@@ -8,6 +8,10 @@ import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 import { GlowButton } from "../ui/GlowButton";
 import Image from "next/image";
 import { getBgClass } from "@/lib/cmsTheme";
+import {
+  resolveRichTextOrNodeFallback,
+  resolveRichTextOrTextFallback,
+} from "@/lib/richTextResolver";
 
 type HeroProps = {
   blok: HeroBlock;
@@ -25,10 +29,6 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
 
   const fallbackBodyText =
     "I’m a freelance fullstack developer building with modern web technologies from my studio in Sweden.";
-  const hasBodyRichText =
-    blok.text?.type === "doc" &&
-    Array.isArray(blok.text.content) &&
-    blok.text.content.length > 0;
 
   const ctaLabel = blok.cta?.trim() || "Find out more";
 
@@ -38,11 +38,6 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
     (typeof blok.media?.alt === "string" && blok.media.alt.trim()) ||
     (typeof blok.media?.title === "string" && blok.media.title.trim()) ||
     "Portrait image";
-
-  const hasFootnoteRichText =
-    blok.footnote?.type === "doc" &&
-    Array.isArray(blok.footnote.content) &&
-    blok.footnote.content.length > 0;
 
   const fallbackFootnote = (
     <>
@@ -77,6 +72,16 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
       </a>{" "}
       (PDF 918kb)
     </>
+  );
+
+  // Normalize CMS rich text once (Testimonials-style resolver pattern).
+  const resolvedBody = resolveRichTextOrTextFallback(
+    blok.text,
+    fallbackBodyText,
+  );
+  const resolvedFootnote = resolveRichTextOrNodeFallback(
+    blok.footnote,
+    fallbackFootnote,
   );
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -165,10 +170,10 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
             ref={bodyTextRef}
             className="@md/hero-content:text-18 text-16 hero-body-text text-fg-secondary max-w-[32ch] min-[500px]:max-w-[40ch]"
           >
-            {hasBodyRichText && blok.text ? (
-              <StoryblokRichText doc={blok.text} />
+            {resolvedBody.kind === "richtext" ? (
+              <StoryblokRichText doc={resolvedBody.doc} />
             ) : (
-              <p>{fallbackBodyText}</p>
+              <p>{resolvedBody.text}</p>
             )}
           </div>
 
@@ -186,10 +191,10 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
           ref={footnoteRef}
           className="richtext-links hero-footnote text-fg-secondary text-[12px] leading-[1.4]"
         >
-          {hasFootnoteRichText && blok.footnote ? (
-            <StoryblokRichText doc={blok.footnote} />
+          {resolvedFootnote.kind === "richtext" ? (
+            <StoryblokRichText doc={resolvedFootnote.doc} />
           ) : (
-            fallbackFootnote
+            resolvedFootnote.node
           )}
         </div>
       </div>

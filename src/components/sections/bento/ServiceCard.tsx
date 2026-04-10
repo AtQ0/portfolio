@@ -7,6 +7,7 @@ import { getBgClass } from "@/lib/cmsTheme";
 import { cn } from "@/lib/utils";
 import { useServiceOverlayAnimation } from "@/hooks/useServiceOverlayAnimation";
 import type { ServiceCard as ServiceCardBlok } from "@/types/storyblok";
+import { resolveRichTextOrTextFallback } from "@/lib/richTextResolver";
 
 type ServiceCardProps = {
   blok?: ServiceCardBlok;
@@ -24,7 +25,9 @@ const POINTER_SIZE = 20;
 export default function ServiceCard({ blok }: ServiceCardProps) {
   const background = blok?.background ?? "bg-secondary";
   const headline = blok?.headline?.trim() ?? FALLBACK_HEADLINE;
-  const text = blok?.text;
+
+  // Normalize text once for stable rendering behavior.
+  const resolvedText = resolveRichTextOrTextFallback(blok?.text, FALLBACK_TEXT);
 
   const artwork = blok?.artworkSVG;
   const artworkSrc = artwork?.filename ?? FALLBACK_ARTWORK_SVG;
@@ -54,11 +57,15 @@ export default function ServiceCard({ blok }: ServiceCardProps) {
 
       <CardContent className="flex flex-col gap-6 md:gap-7">
         <div className="text-fg-secondary">
-          {text ? <StoryblokRichText doc={text} /> : <p>{FALLBACK_TEXT}</p>}
+          {resolvedText.kind === "richtext" ? (
+            <StoryblokRichText doc={resolvedText.doc} />
+          ) : (
+            <p>{resolvedText.text}</p>
+          )}
         </div>
 
         <div ref={containerRef} className="relative mx-auto w-fit">
-          <Image src={artworkSrc} alt={artworkAlt} width={150} height={150} />
+          <Image src={artworkSrc} alt={artworkAlt} width={111} height={75} />
 
           <div
             className="pointer-events-none absolute top-0 left-0 flex w-fit items-start gap-2 drop-shadow-md transition-transform ease-in-out"

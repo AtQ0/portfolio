@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import type { TechStackCard as TechStackCardBlok } from "@/types/storyblok";
 import { TechStackItemIcon } from "./TechStackItemIcon";
 import { Marquee } from "@/components/ui/Marquee";
+import { resolveRichTextOrTextFallback } from "@/lib/richTextResolver";
 
 type TechStackCardProps = {
   blok?: TechStackCardBlok;
@@ -17,7 +18,7 @@ const FALLBACK_TEXT =
 export default function TechStackCard({ blok }: TechStackCardProps) {
   const background = blok?.background ?? "bg-secondary";
   const headline = blok?.headline?.trim() ?? FALLBACK_HEADLINE;
-  const text = blok?.text;
+  const resolvedText = resolveRichTextOrTextFallback(blok?.text, FALLBACK_TEXT);
 
   return (
     <Card
@@ -32,7 +33,11 @@ export default function TechStackCard({ blok }: TechStackCardProps) {
 
       <CardContent className="flex flex-col gap-8">
         <div className="text-fg-secondary">
-          {text ? <StoryblokRichText doc={text} /> : <p>{FALLBACK_TEXT}</p>}
+          {resolvedText.kind === "richtext" ? (
+            <StoryblokRichText doc={resolvedText.doc} />
+          ) : (
+            <p>{resolvedText.text}</p>
+          )}
         </div>
 
         {/* Negative margin to bleed the marquee past the edges */}

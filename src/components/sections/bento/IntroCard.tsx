@@ -11,6 +11,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import type { IntroCard as IntroCardBlok } from "@/types/storyblok";
+import { resolveRichTextOrTextFallback } from "@/lib/richTextResolver";
 
 type IntroCardProps = {
   blok?: IntroCardBlok;
@@ -26,9 +27,14 @@ const FALLBACK_CTA_TEXT = "Say hello";
 export default function IntroCard({ blok }: IntroCardProps) {
   const background = blok?.background ?? "bg-secondary";
   const headline = blok?.headline?.trim() ?? FALLBACK_HEADLINE;
-  const description = blok?.description;
   const ctaLink = blok?.ctaLink?.trim() || FALLBACK_CTA_LINK;
   const ctaText = (blok?.ctaText?.trim() || FALLBACK_CTA_TEXT) as string;
+
+  // Resolver pattern: normalize optional rich text + fallback once.
+  const resolvedDescription = resolveRichTextOrTextFallback(
+    blok?.description,
+    FALLBACK_DESCRIPTION,
+  );
 
   return (
     <Card
@@ -44,10 +50,10 @@ export default function IntroCard({ blok }: IntroCardProps) {
 
         <CardContent className="flex flex-col">
           <div className="text-fg-secondary">
-            {description ? (
-              <StoryblokRichText doc={description} />
+            {resolvedDescription.kind === "richtext" ? (
+              <StoryblokRichText doc={resolvedDescription.doc} />
             ) : (
-              <p>{FALLBACK_DESCRIPTION}</p>
+              <p>{resolvedDescription.text}</p>
             )}
           </div>
         </CardContent>
