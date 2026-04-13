@@ -28,7 +28,7 @@ export default function ClientLogos({ blok, className }: ClientLogosProps) {
           className="marquee-fade"
           style={
             {
-              "--marquee-fade-size": "392px",
+              "--marquee-fade-size": "192px",
             } as React.CSSProperties
           }
         >
@@ -50,7 +50,7 @@ export default function ClientLogos({ blok, className }: ClientLogosProps) {
                       height={128}
                       src={src}
                       alt={item.logo?.alt || "Client logo"}
-                      className="h-8 w-auto object-contain opacity-80"
+                      className="h-8 w-auto object-contain opacity-40 filter-(--client-logo-filter) transition-opacity duration-200 ease-in-out group-hover:opacity-100"
                     />
                   </a>
                 </li>

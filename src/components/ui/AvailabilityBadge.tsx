@@ -10,7 +10,7 @@ export default function AvailabilityBadge({
   closedText,
 }: AvailabilityBadgeProps) {
   const badgeText = isOpen ? "Open for new projects" : closedText;
-  const badgeColor = isOpen ? "bg-tea-green" : "bg-red-500";
+  const badgeColor = isOpen ? "bg-accent-tertiary" : "bg-red-500";
 
   return (
     <div

@@ -53,7 +53,7 @@ export default function TechStackCard({ blok }: TechStackCardProps) {
                   <li
                     key={item._uid}
                     className={cn(
-                      "bg-bg-primary rounded-sm border border-white/40 p-2",
+                      "bg-bg-primary border-fg-primary/20 rounded-sm border p-2",
                       "transition-[border-color] duration-200",
                       "hover:border-fg-primary",
                     )}

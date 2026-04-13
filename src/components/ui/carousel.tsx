@@ -182,7 +182,7 @@ export function Carousel<T>({
               onClick={() => sliderRef.current?.prev()}
             >
               <span className="sr-only">Go to previous item</span>
-              <ChevronLeftIcon className="text-fg-secondary size-full transition-colors duration-200 ease-out hover:text-white focus-visible:text-white" />
+              <ChevronLeftIcon className="text-fg-secondary hover:text-fg-primary focus-visible:text-fg-primary size-full transition-colors duration-200 ease-out" />
             </button>
 
             <button
@@ -191,7 +191,7 @@ export function Carousel<T>({
               onClick={() => sliderRef.current?.next()}
             >
               <span className="sr-only">Go to next item</span>
-              <ChevronRightIcon className="text-fg-secondary size-full transition-colors duration-200 ease-out hover:text-white focus-visible:text-white" />
+              <ChevronRightIcon className="text-fg-secondary hover:text-fg-primary focus-visible:text-fg-primary size-full transition-colors duration-200 ease-out" />
             </button>
           </div>
         </div>

@@ -24,9 +24,7 @@ function GlowInner({
     <span className="relative inline-block">
       <span
         className={cn(
-          "relative z-10 inline-block rounded-[30px] bg-white px-12 py-4 text-[16px] font-medium text-black",
-          "shadow-xl shadow-black/0 transition-shadow duration-700 ease-out",
-          "group-hover/button:shadow-black/30 group-hover/button:duration-300",
+          "glow-button-inner bg-fg-primary text-bg-primary relative z-10 inline-block rounded-[30px] px-12 py-4 text-[16px] font-medium",
           innerClassName,
         )}
       >

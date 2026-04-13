@@ -44,7 +44,7 @@ export default function IntroCard({ blok }: IntroCardProps) {
       )}
     >
       <div className="text-14 flex max-w-[38.5ch] flex-col gap-4">
-        <CardHeader className="text-light-coral font-regular text-[24px]">
+        <CardHeader className="text-accent-primary font-regular text-[24px]">
           <h2>{headline}</h2>
         </CardHeader>
 

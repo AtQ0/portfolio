@@ -80,7 +80,7 @@ export default function ServiceCard({ blok }: ServiceCardProps) {
               width={POINTER_SIZE}
               height={POINTER_SIZE}
             />
-            <span className="text-12 text-fg-tertiary mt-5 -ml-2 inline-block rounded-[4px] bg-[#f1e067] px-1.5 py-0 font-semibold">
+            <span className="text-12 text-fg-tertiary bg-accent-tertiary mt-5 -ml-2 inline-block rounded-[4px] px-1.5 py-0 font-semibold">
               {overlayLabel}
             </span>
           </div>

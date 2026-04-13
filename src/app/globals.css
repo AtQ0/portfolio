@@ -2,9 +2,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* Shadcn CSS custom variant */
-@custom-variant dark (&:is(.dark *));
-
 /* ========================
    0. Custom Fonts
 ========================= */
@@ -48,10 +45,15 @@
   --fg-gray: #808080;
   --fg-black: #000000;
 
-  /* Accents */
+  /* Raw accent palette */
   --accent-tea-green: #cefdae;
   --accent-light-coral: #ec8f8c;
   --accent-brilliant-azure: #3f8ae2;
+
+  /* Semantic accents (dark default) */
+  --accent-primary: var(--accent-light-coral);
+  --accent-secondary: var(--accent-brilliant-azure);
+  --accent-tertiary: var(--accent-tea-green);
 
   /* Active theme colors (dark default) */
   --active-bg-primary: var(--bg-black);
@@ -61,6 +63,8 @@
   --active-fg-primary: var(--fg-white);
   --active-fg-secondary: var(--fg-gray);
   --active-fg-tertiary: var(--fg-black);
+
+  --client-logo-filter: none;
 
   /* Active font (default SaansVF) */
   --active-font: "SaansVF", system-ui, sans-serif;
@@ -123,9 +127,10 @@
   --color-fg-primary: var(--active-fg-primary);
   --color-fg-secondary: var(--active-fg-secondary);
   --color-fg-tertiary: var(--active-fg-tertiary);
-  --color-tea-green: var(--accent-tea-green);
-  --color-light-coral: var(--accent-light-coral);
-  --color-brilliant-azure: var(--accent-brilliant-azure);
+
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-tertiary: var(--accent-tertiary);
 
   /* Gutter → spacing utilities: p-gutter, px-gutter-md, gap-gutter-lg, p-inner, … */
   --spacing-gutter: var(--app-gutter);
@@ -174,7 +179,7 @@
   --text-fluid-36-64--line-height: 1.1;
   --text-fluid-36-64--letter-spacing: -2%;
 
-  /* Easing (use as var(--ease-out-expo) in CSS or wire to transition utilities) */
+  /* Easing */
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
   --ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
   --ease-out-quart: cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -229,15 +234,20 @@
   :root {
     --active-bg-primary: var(--bg-white);
     --active-bg-secondary: var(--bg-bright-snow);
+    --active-bg-tertiary: var(--bg-black);
     --active-fg-primary: var(--fg-black);
     --active-fg-secondary: var(--fg-gray);
+
+    --client-logo-filter: invert(1);
+
+    /* Theme swap: accent primary becomes blue in light mode */
+    --accent-primary: var(--accent-brilliant-azure);
   }
 }
 
 /* ========================
    4. Base Styles
 ========================= */
-
 html {
   scroll-behavior: smooth;
 }
@@ -269,7 +279,7 @@ body {
   transform: translateY(15px); /* match GSAP start pos */
 }
 
-/* Hide hero body wrapper until GSAP reveal */
+/* Hide hero CTA until GSAP reveal */
 .hero-cta {
   opacity: 0;
   visibility: hidden;
@@ -283,15 +293,12 @@ body {
   transform: translateY(15px); /* match GSAP start pos */
 }
 
-/* Generic animated link styles:
-   - Use `animated-link` on regular JSX links.
-   - Use `richtext-links` on a container to auto-style all nested <a> tags
-     (e.g. links rendered by Storyblok rich text, plus fallback links inside same container). */
+/* Generic animated link styles */
 .animated-link,
 .animated-link:visited,
 .richtext-links a,
 .richtext-links a:visited {
-  color: var(--color-light-coral);
+  color: var(--color-accent-primary);
   text-decoration: none;
   font: inherit;
   line-height: inherit;
@@ -299,8 +306,8 @@ body {
   display: inline;
   padding: 0;
   background-image:
-    linear-gradient(var(--color-light-coral), var(--color-light-coral)),
-    linear-gradient(var(--color-light-coral), var(--color-light-coral));
+    linear-gradient(var(--color-accent-primary), var(--color-accent-primary)),
+    linear-gradient(var(--color-accent-primary), var(--color-accent-primary));
   background-repeat: no-repeat;
   background-position:
     left 100%,
@@ -310,6 +317,7 @@ body {
     0% 1px;
   transition: background-size 0.25s ease;
 }
+
 .animated-link:hover,
 .richtext-links a:hover {
   background-size:
@@ -327,7 +335,7 @@ body {
 }
 
 .marquee-fade {
-  --marquee-fade-size: 128px;
+  --marquee-fade-size: 60px;
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0,
@@ -342,6 +350,10 @@ body {
     black calc(100% - var(--marquee-fade-size)),
     transparent 100%
   );
+}
+
+.marquee-root:hover .marquee-track {
+  animation-play-state: paused;
 }
 
 /* Shadcn CSS dark mode variables */
@@ -384,9 +396,11 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
