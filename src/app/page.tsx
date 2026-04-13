@@ -1,6 +1,7 @@
 import Hero from "@/components/sections/Hero";
 import Strategy from "@/components/sections/Strategy";
 import BentoGrid from "@/components/sections/bento/BentoGrid";
+import Projects from "@/components/sections/projects/Projects";
 import { getStoryblokApi } from "@/lib/storyblok";
 import type {
   PageContent,
@@ -40,6 +41,8 @@ export default async function Home() {
       ) : null}
 
       {strategyBlock ? <Strategy blok={strategyBlock} /> : null}
+
+      <Projects />
     </div>
   );
 }

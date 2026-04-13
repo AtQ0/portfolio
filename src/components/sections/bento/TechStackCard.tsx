@@ -31,7 +31,7 @@ export default function TechStackCard({ blok }: TechStackCardProps) {
         <h2 className="text-fg-primary font-regular text-[18px]">{headline}</h2>
       </CardHeader>
 
-      <CardContent className="flex flex-col gap-8">
+      <CardContent className="flex flex-col gap-6 sm:gap-7.5">
         <div className="text-fg-secondary">
           {resolvedText.kind === "richtext" ? (
             <StoryblokRichText doc={resolvedText.doc} />

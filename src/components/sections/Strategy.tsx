@@ -25,18 +25,21 @@ export default function Strategy({ blok }: StrategyProps) {
   const resolvedText = resolveRichTextOrTextFallback(blok.text, FALLBACK_TEXT);
 
   return (
-    <section className={cn("h-screen", getBgClass(background, "bg-secondary"))}>
-      <div className="p-gutter flex h-screen flex-col gap-10">
-        <h1 className="text-fg-secondary max-w-[18ch] text-2xl font-light text-pretty">
-          {headline}
-        </h1>
-        <div className="text-fg-secondary">
-          {resolvedText.kind === "richtext" ? (
-            <StoryblokRichText doc={resolvedText.doc} />
-          ) : (
-            <p>{resolvedText.text}</p>
-          )}
-        </div>
+    <section
+      className={cn(
+        "px-gutter flex flex-col gap-7 py-[calc(var(--spacing-gutter)*3)] md:gap-10 md:py-[calc(var(--spacing-gutter)*2)] lg:gap-13",
+        getBgClass(background, "bg-secondary"),
+      )}
+    >
+      <h1 className="text-fg-secondary max-w-[18ch] text-2xl text-pretty">
+        {headline}
+      </h1>
+      <div className="text-fg-secondary text-fluid-30-56 [&_p+p]:mt-10">
+        {resolvedText.kind === "richtext" ? (
+          <StoryblokRichText doc={resolvedText.doc} />
+        ) : (
+          <p>{resolvedText.text}</p>
+        )}
       </div>
     </section>
   );
