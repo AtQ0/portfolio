@@ -8,8 +8,14 @@ import type {
   HeroBlock,
   BentoBlock,
   StrategyBlock,
+  ProjectsBlock,
 } from "@/types/storyblok";
-import { isBentoBlock, isHeroBlock, isStrategyBlock } from "@/types/storyblok";
+import {
+  isBentoBlock,
+  isHeroBlock,
+  isStrategyBlock,
+  isProjectsBlock,
+} from "@/types/storyblok";
 
 export default async function Home() {
   const storyblokApi = getStoryblokApi();
@@ -23,6 +29,8 @@ export default async function Home() {
     pageContent.body?.find(isBentoBlock);
   const strategyBlock: StrategyBlock | undefined =
     pageContent.body?.find(isStrategyBlock);
+  const projectsBlock: ProjectsBlock | undefined =
+    pageContent.body?.find(isProjectsBlock);
 
   // normalized hero cta anchor link to be passed to hero (a) and bento (id) sections for match
   const ctaTarget =
@@ -42,7 +50,7 @@ export default async function Home() {
 
       {strategyBlock ? <Strategy blok={strategyBlock} /> : null}
 
-      <Projects />
+      {projectsBlock ? <Projects blok={projectsBlock} /> : null}
     </div>
   );
 }

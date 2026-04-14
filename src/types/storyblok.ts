@@ -129,6 +129,25 @@ export type StrategyBlock = {
   _uid: string;
 };
 
+export type ProjectsBlock = {
+  background?: "bg-primary" | "bg-tertiary";
+  component: "ProjectsBlock";
+  headline?: string;
+  text?: StoryblokRichText;
+  projects?: ProjectItem[];
+  _editable?: string;
+  _uid: string;
+};
+
+export type ProjectItem = {
+  headline?: string;
+  description?: StoryblokRichText;
+  media?: StoryblokAsset;
+  link?: Multilink;
+  _editable?: string;
+  _uid: string;
+};
+
 export type StoryblokRichText = SbRichTextNode<ReactElement>;
 
 export type StoryblokAsset = {
@@ -161,3 +180,7 @@ export const isBentoBlock = (
 export const isStrategyBlock = (
   block: StrategyBlock | UnknownBlock,
 ): block is StrategyBlock => block.component === "block_strategy";
+
+export const isProjectsBlock = (
+  block: ProjectsBlock | UnknownBlock,
+): block is ProjectsBlock => block.component === "block_projects";

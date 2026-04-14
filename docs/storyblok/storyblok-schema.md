@@ -77,7 +77,16 @@ page (Content)
  │    └─ text              → Richtext / Textarea (field)
  │
  ├─ block_projects (Nestable block)
- │    └─ background          → Single-Option (field)
+ │    ├─ background        → Single-Option (field)
+ │    ├─ headline          → Text (field)
+ │    ├─ text              → Richtext / Textarea (field)
+ │    └─ projects          → Blocks field
+ │         └─ projectItem (Nestable block)
+ │             ├─ headline     → Text (field)
+ │             ├─ description  → Richtext (field)
+ │             ├─ media        → Asset (image/video) (field)
+ │             └─ link         → Multilink (field)
+ │
  ├─ block_faq (Nestable block)
  │    └─ background          → Single-Option (field)
  ├─ block_play (Nestable block)
