@@ -31,9 +31,9 @@ export default function Strategy({ blok }: StrategyProps) {
         getBgClass(background, "bg-secondary"),
       )}
     >
-      <h1 className="text-fg-secondary max-w-[18ch] text-2xl text-pretty">
+      <h2 className="text-fg-secondary max-w-[18ch] text-2xl text-pretty">
         {headline}
-      </h1>
+      </h2>
       <div className="text-fg-secondary text-fluid-30-56 [&_p+p]:mt-10">
         {resolvedText.kind === "richtext" ? (
           <StoryblokRichText doc={resolvedText.doc} />

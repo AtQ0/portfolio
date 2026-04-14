@@ -28,7 +28,7 @@ export default function TechStackCard({ blok }: TechStackCardProps) {
       )}
     >
       <CardHeader>
-        <h2 className="text-fg-primary font-regular text-[18px]">{headline}</h2>
+        <h3 className="text-fg-primary font-regular text-[18px]">{headline}</h3>
       </CardHeader>
 
       <CardContent className="flex flex-col gap-6 sm:gap-7.5">

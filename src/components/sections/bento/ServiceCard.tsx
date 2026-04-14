@@ -51,7 +51,7 @@ export default function ServiceCard({ blok }: ServiceCardProps) {
     >
       <CardHeader>
         <CardTitle className="text-fg-primary font-regular text-[18px]">
-          <h2>{headline}</h2>
+          <h3>{headline}</h3>
         </CardTitle>
       </CardHeader>
 

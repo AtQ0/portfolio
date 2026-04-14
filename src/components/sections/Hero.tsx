@@ -4,6 +4,7 @@ import AvailabilityBadge from "../ui/AvailabilityBadge";
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { StoryblokRichText } from "@storyblok/react";
+import SplitText from "@/components/ui/SplitText";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 import { GlowButton } from "../ui/GlowButton";
 import Image from "next/image";
@@ -124,8 +125,6 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
     charsSelector: ".hero-char",
   });
 
-  const headlineWords = headline.split(" ");
-
   return (
     <section
       ref={sectionRef}
@@ -149,20 +148,7 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
             ref={headingRef}
             aria-label={headline}
           >
-            {headlineWords.map((word, wi) => (
-              <span key={wi} aria-hidden="true" className="inline-block">
-                {word.split("").map((char, ci) => (
-                  <span
-                    key={`${wi}-${ci}`}
-                    aria-hidden="true"
-                    className={cn("hero-char inline-block")}
-                  >
-                    {char}
-                  </span>
-                ))}
-                {wi < headlineWords.length - 1 ? "\u00A0" : ""}
-              </span>
-            ))}
+            <SplitText text={headline} charClassName="hero-char" />
           </h1>
 
           {/* Body text */}

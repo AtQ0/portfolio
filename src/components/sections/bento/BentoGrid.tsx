@@ -51,7 +51,7 @@ export default function BentoGrid({ blok, ctaTarget }: BentoGridProps) {
       )}
     >
       <div className="sr-only">
-        <h1>Overview</h1>
+        <h2>Overview</h2>
       </div>
 
       <div
