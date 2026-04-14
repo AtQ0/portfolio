@@ -356,6 +356,8 @@ body {
   animation-play-state: paused;
 }
 
+/* Strategy characters use muted color before scroll reveal */
+
 /* Shadcn CSS dark mode variables */
 .dark {
   --background: oklch(0.145 0 0);
