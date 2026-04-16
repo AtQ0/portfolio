@@ -35,7 +35,7 @@ export default function Projects({ blok }: ProjectsProps) {
   return (
     <section
       className={cn(
-        "px-gutter flex h-screen flex-col gap-7 py-[calc(var(--spacing-gutter)*3)] md:py-[calc(var(--spacing-gutter)*2)]",
+        "px-gutter flex h-screen flex-col gap-7 overflow-hidden py-[calc(var(--spacing-gutter)*3)] md:py-[calc(var(--spacing-gutter)*2)]",
         getBgClass(background, "bg-primary"),
       )}
     >
@@ -49,14 +49,19 @@ export default function Projects({ blok }: ProjectsProps) {
             <p>{resolvedText.text}</p>
           )}
         </div>
-        <div className="bg-amber-500">
+        <div>
           <Carousel
+            classesControls="bg-red-500"
+            classesSlide="bg-green-500 h-[400px]"
             items={slides}
-            controlsPosition="bottom"
+            controlsPosition="top"
             perView={1}
-            spacing={60}
+            spacing={15}
             renderSlide={(slide) => (
-              <article key={slide.key} className="bg-[#D9D9D9] p-10">
+              <article
+                key={slide.key}
+                className="mt-10 h-full rounded-2xl bg-[#D9D9D9]"
+              >
                 <a href={slide.link} target="_blank" rel="noreferrer">
                   <Image
                     src={slide.media}

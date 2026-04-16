@@ -67,8 +67,8 @@ export default function Strategy({ blok }: StrategyProps) {
     charsSelector: ".strategy-char",
     fromColor: "var(--color-fg-secondary)",
     toColor: "var(--color-fg-primary)",
-    start: "top 30%", // start the animation when the section is XX% visible
-    end: "bottom 65%", // end the animation when the section is XX% visible
+    start: "top 38%", // start the animation when the section is XX% visible
+    end: "bottom 75%", // end the animation when the section is XX% visible
     catchUpDuration: 0.75, // delay between the scroll and the animation
     featherChars: 1.25, // soft edge width in characters
     minEdgeOpacity: 0.4, // opacity at the very boundary on active side
