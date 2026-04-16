@@ -16,7 +16,7 @@ export default function ClientLogos({ blok, className }: ClientLogosProps) {
   return (
     <div
       className={cn(
-        "text-fg-secondary",
+        "text-fg-secondary px-gutter",
         getBgClass(background, "bg-primary"),
         className,
       )}
@@ -28,7 +28,7 @@ export default function ClientLogos({ blok, className }: ClientLogosProps) {
           className="marquee-fade"
           style={
             {
-              "--marquee-fade-size": "192px",
+              "--marquee-fade-size": "152px",
             } as React.CSSProperties
           }
         >
