@@ -19,70 +19,73 @@ type HeroProps = {
   ctaTarget: string;
 };
 
+const FALLBACK_CLOSED_TEXT = "Unavailable for new projects";
+const FALLBACK_HEADLINE =
+  "Crafted experiences, designed to be beautiful and built to last.";
+const FALLBACK_BODY_TEXT =
+  "I’m a fullstack developer building digital products with modern web technologies from my studio in Sweden.";
+const FALLBACK_CTA_LABEL = "Find out more";
+const FALLBACK_IMAGE_SRC = "/images/hero/portrait.jpg";
+const FALLBACK_IMAGE_ALT = "Portrait image";
+
+const FALLBACK_FOOTNOTE = (
+  <>
+    Find me at{" "}
+    <a
+      href="https://github.com/AtQ0"
+      target="_blank"
+      rel="noreferrer"
+      className="underline underline-offset-4 hover:no-underline"
+    >
+      GitHub
+    </a>{" "}
+    and{" "}
+    <a
+      href="https://www.linkedin.com/in/atkobabic/"
+      target="_blank"
+      rel="noreferrer"
+      className="underline underline-offset-4 hover:no-underline"
+    >
+      LinkedIn
+    </a>
+    .
+    <br />
+    Download my{" "}
+    <a
+      href="/files/resume-atko-babic.pdf"
+      target="_blank"
+      rel="noreferrer"
+      className="underline underline-offset-4 hover:no-underline"
+    >
+      resume
+    </a>{" "}
+    (PDF 918kb)
+  </>
+);
+
 export default function Hero({ blok, ctaTarget }: HeroProps) {
   const background = blok.background ?? "bg-secondary";
   const isOpen = blok.signal ?? true;
-  const closedText =
-    blok.signalClosedText?.trim() || "Unavailable for new projects";
-  const headline =
-    blok.headline?.trim() ||
-    "Crafted experiences, designed to be beautiful and built to last.";
-
-  const fallbackBodyText =
-    "I’m a fullstack developer building digital products with modern web technologies from my studio in Sweden.";
-
-  const ctaLabel = blok.cta?.trim() || "Find out more";
+  const closedText = blok.signalClosedText?.trim() || FALLBACK_CLOSED_TEXT;
+  const headline = blok.headline?.trim() || FALLBACK_HEADLINE;
+  const ctaLabel = blok.cta?.trim() || FALLBACK_CTA_LABEL;
 
   const imageSrc =
-    typeof blok.media?.filename === "string" ? blok.media.filename : null;
+    (typeof blok.media?.filename === "string" && blok.media.filename.trim()) ||
+    FALLBACK_IMAGE_SRC;
   const imageAlt =
     (typeof blok.media?.alt === "string" && blok.media.alt.trim()) ||
     (typeof blok.media?.title === "string" && blok.media.title.trim()) ||
-    "Portrait image";
-
-  const fallbackFootnote = (
-    <>
-      Find me at{" "}
-      <a
-        href="https://github.com/AtQ0"
-        target="_blank"
-        rel="noreferrer"
-        className="underline underline-offset-4 hover:no-underline"
-      >
-        GitHub
-      </a>{" "}
-      and{" "}
-      <a
-        href="https://www.linkedin.com/in/atkobabic/"
-        target="_blank"
-        rel="noreferrer"
-        className="underline underline-offset-4 hover:no-underline"
-      >
-        LinkedIn
-      </a>
-      .
-      <br />
-      Download my{" "}
-      <a
-        href="/files/resume-atko-babic.pdf"
-        target="_blank"
-        rel="noreferrer"
-        className="underline underline-offset-4 hover:no-underline"
-      >
-        resume
-      </a>{" "}
-      (PDF 918kb)
-    </>
-  );
+    FALLBACK_IMAGE_ALT;
 
   // Normalize CMS rich text once (Testimonials-style resolver pattern).
   const resolvedBody = resolveRichTextOrTextFallback(
     blok.text,
-    fallbackBodyText,
+    FALLBACK_BODY_TEXT,
   );
   const resolvedFootnote = resolveRichTextOrNodeFallback(
     blok.footnote,
-    fallbackFootnote,
+    FALLBACK_FOOTNOTE,
   );
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -188,22 +191,16 @@ export default function Hero({ blok, ctaTarget }: HeroProps) {
       {/* Right column */}
       <div className="bg-bg-primary relative w-full overflow-hidden lg:max-h-screen">
         {/* Profile image */}
-        {imageSrc ? (
-          <Image
-            ref={imageRef}
-            src={imageSrc}
-            alt={imageAlt}
-            width={1000}
-            height={1334}
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="h-auto w-full"
-            priority
-          />
-        ) : (
-          <div className="text-fg-secondary flex min-h-[320px] items-center justify-center">
-            No image selected
-          </div>
-        )}
+        <Image
+          ref={imageRef}
+          src={imageSrc}
+          alt={imageAlt}
+          width={1000}
+          height={1334}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          className="h-auto w-full"
+          priority
+        />
 
         {/* Profile image overlay */}
         <div

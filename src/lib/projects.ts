@@ -15,40 +15,40 @@ export const FALLBACK_PROJECTS = [
     headline: "Project 1",
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-    media: "media 1",
-    link: "link 1",
+    media: "/images/projects/project-1.jpg",
+    link: "https://trailsync.app",
   },
   {
     id: "fallback-2",
     headline: "Project 2",
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-    media: "media 1",
-    link: "link 2",
+    media: "/images/projects/project-2.jpg",
+    link: "https://northstar-studio.com",
   },
   {
     id: "fallback-3",
     headline: "Project 3",
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-    media: "media 1",
-    link: "link 3",
+    media: "/images/projects/project-3.jpg",
+    link: "https://lumaops.io",
   },
   {
     id: "fallback-4",
     headline: "Project 4",
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-    media: "media 1",
-    link: "link 4",
+    media: "/images/projects/project-4.jpg",
+    link: "https://fieldnote-cloud.com",
   },
   {
     id: "fallback-5",
     headline: "Project 5",
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-    media: "media 1",
-    link: "link 5",
+    media: "/images/projects/project-5.jpg",
+    link: "https://harborhq.dev",
   },
 ] as const satisfies readonly FallbackProject[];
 

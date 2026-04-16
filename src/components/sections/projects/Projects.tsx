@@ -1,3 +1,4 @@
+"use client";
 import { resolveRichTextOrTextFallback } from "@/lib/richTextResolver";
 import type { ProjectsBlock } from "@/types/storyblok";
 import {
@@ -7,6 +8,8 @@ import {
 import { cn } from "@/lib/utils";
 import { getBgClass } from "@/lib/cmsTheme";
 import { StoryblokRichText } from "@storyblok/react";
+import { Carousel } from "@/components/ui/Carousel";
+import Image from "next/image";
 
 type ProjectsProps = {
   blok: ProjectsBlock;
@@ -27,6 +30,8 @@ export default function Projects({ blok }: ProjectsProps) {
     FALLBACK_PROJECTS,
   );
 
+  console.log("slides", slides);
+
   return (
     <section
       className={cn(
@@ -36,12 +41,39 @@ export default function Projects({ blok }: ProjectsProps) {
     >
       <h2 className="text-40 md:text-48 text-fg-primary">{headline}</h2>
 
-      <div className="text-fg-secondary text-18 pretty max-w-[40ch]">
-        {resolvedText.kind === "richtext" ? (
-          <StoryblokRichText doc={resolvedText.doc} />
-        ) : (
-          <p>{resolvedText.text}</p>
-        )}
+      <div className="flex flex-col gap-20">
+        <div className="text-fg-secondary text-18 pretty max-w-[40ch]">
+          {resolvedText.kind === "richtext" ? (
+            <StoryblokRichText doc={resolvedText.doc} />
+          ) : (
+            <p>{resolvedText.text}</p>
+          )}
+        </div>
+        <div className="bg-amber-500">
+          <Carousel
+            items={slides}
+            controlsPosition="bottom"
+            perView={1}
+            spacing={60}
+            renderSlide={(slide) => (
+              <article key={slide.key} className="bg-[#D9D9D9] p-10">
+                <a href={slide.link} target="_blank" rel="noreferrer">
+                  <Image
+                    src={slide.media}
+                    alt={slide.headline}
+                    width={100}
+                    height={100}
+                  />
+                </a>
+                <a href={slide.link} target="_blank" rel="noreferrer">
+                  <h3 className="text-fg-primary text-20 md:text-24">
+                    {slide.headline}
+                  </h3>
+                </a>
+              </article>
+            )}
+          />
+        </div>
       </div>
     </section>
   );
