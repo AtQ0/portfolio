@@ -35,7 +35,7 @@ export default function Projects({ blok }: ProjectsProps) {
   return (
     <section
       className={cn(
-        "px-gutter flex h-screen flex-col gap-7 overflow-hidden py-[calc(var(--spacing-gutter)*3)] md:py-[calc(var(--spacing-gutter)*2)]",
+        "px-gutter flex flex-col gap-7 overflow-hidden py-[calc(var(--spacing-gutter)*3)] md:py-[calc(var(--spacing-gutter)*2)]",
         getBgClass(background, "bg-primary"),
       )}
     >
@@ -51,16 +51,30 @@ export default function Projects({ blok }: ProjectsProps) {
         </div>
         <div>
           <Carousel
+            className="gap-10"
             classesControls="bg-red-500"
-            classesSlide="bg-green-500 h-[400px]"
+            classesSlide="bg-green-500 h-[300px] flex flex-col items-center justify-center"
             items={slides}
             controlsPosition="top"
             perView={1}
             spacing={15}
+            options={{
+              breakpoints: {
+                "(max-width: 501px)": {
+                  slides: { perView: 1, spacing: 12 },
+                },
+                "(min-width: 640px)": {
+                  slides: { perView: 1.5, spacing: 16 },
+                },
+                "(min-width: 1024px)": {
+                  slides: { perView: 3, spacing: 24 },
+                },
+              },
+            }}
             renderSlide={(slide) => (
               <article
                 key={slide.key}
-                className="mt-10 h-full rounded-2xl bg-[#D9D9D9]"
+                className="h-full w-full rounded-2xl bg-[#D9D9D9]"
               >
                 <a href={slide.link} target="_blank" rel="noreferrer">
                   <Image

@@ -61,6 +61,7 @@ export type CarouselProps<T> = {
   perView?: number;
   spacing?: number;
   controlsPosition?: "top" | "bottom";
+  className?: string;
   classesControls?: string;
   classesSlide?: string;
 };
@@ -72,6 +73,7 @@ export function Carousel<T>({
   perView = 1,
   spacing = 16,
   controlsPosition = "top",
+  className = "",
   classesControls = "",
   classesSlide = "",
 }: CarouselProps<T>) {
@@ -144,8 +146,9 @@ export function Carousel<T>({
   return (
     <div
       className={cn(
-        "@container/carousel flex size-full flex-col justify-between transition-opacity duration-500 ease-in-out",
+        "@container/carousel flex size-full flex-col transition-opacity duration-500 ease-in-out",
         !ready && "opacity-0",
+        className,
       )}
     >
       {ready && (

@@ -31,6 +31,7 @@ export default function TestimonialCard({ blok }: TestimonialCardProps) {
       )}
     >
       <Carousel
+        className="gap-6"
         items={slides}
         controlsPosition="bottom"
         perView={1}
@@ -54,7 +55,7 @@ export default function TestimonialCard({ blok }: TestimonialCardProps) {
               </div>
             </blockquote>
 
-            <figcaption className="flex flex-col items-start pb-8">
+            <figcaption className="flex flex-col items-start">
               <cite className="text-fg-primary block text-lg not-italic">
                 {slide.authorName}
               </cite>
