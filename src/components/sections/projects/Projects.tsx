@@ -1,15 +1,18 @@
 "use client";
+
 import { resolveRichTextOrTextFallback } from "@/lib/richTextResolver";
 import type { ProjectsBlock } from "@/types/storyblok";
 import {
   mergeCmsProjectsWithFallbacks,
   FALLBACK_PROJECTS,
+  type ResolvedProjectSlide,
 } from "@/lib/projects";
 import { cn } from "@/lib/utils";
 import { getBgClass } from "@/lib/cmsTheme";
 import { StoryblokRichText } from "@storyblok/react";
 import { Carousel } from "@/components/ui/Carousel";
 import Image from "next/image";
+import { useCallback, useMemo } from "react";
 
 type ProjectsProps = {
   blok: ProjectsBlock;
@@ -25,12 +28,15 @@ export default function Projects({ blok }: ProjectsProps) {
   const headline = blok.headline?.trim() || FALLBACK_HEADLINE;
   const resolvedText = resolveRichTextOrTextFallback(blok.text, FALLBACK_TEXT);
 
-  const slides = mergeCmsProjectsWithFallbacks(
-    blok.projects,
-    FALLBACK_PROJECTS,
+  const slides = useMemo(
+    () => mergeCmsProjectsWithFallbacks(blok.projects, FALLBACK_PROJECTS),
+    [blok.projects],
   );
 
-  console.log("slides", slides);
+  const getSlideKey = useCallback(
+    (slide: ResolvedProjectSlide) => slide.key,
+    [],
+  );
 
   return (
     <section
@@ -49,33 +55,32 @@ export default function Projects({ blok }: ProjectsProps) {
             <p>{resolvedText.text}</p>
           )}
         </div>
-        <div>
+        <div className="w-full">
           <Carousel
-            className="gap-10"
-            classesControls="bg-red-500"
-            classesSlide="bg-green-500 h-[300px] flex flex-col items-center justify-center"
+            className="w-full gap-10"
+            classesSlide="min-h-0"
+            getItemKey={getSlideKey}
             items={slides}
             controlsPosition="top"
-            perView={1}
-            spacing={15}
             options={{
+              slides: {
+                perView: 1,
+                spacing: 16,
+              },
               breakpoints: {
-                "(max-width: 501px)": {
-                  slides: { perView: 1, spacing: 12 },
-                },
-                "(min-width: 640px)": {
-                  slides: { perView: 1.5, spacing: 16 },
+                "(min-width: 768px)": {
+                  slides: { perView: 2, spacing: 16 },
                 },
                 "(min-width: 1024px)": {
-                  slides: { perView: 3, spacing: 24 },
+                  slides: { perView: 3, spacing: 16 },
+                },
+                "(min-width: 1280px)": {
+                  slides: { perView: 4, spacing: 16 },
                 },
               },
             }}
             renderSlide={(slide) => (
-              <article
-                key={slide.key}
-                className="h-full w-full rounded-2xl bg-[#D9D9D9]"
-              >
+              <article className="flex h-[418px] w-full min-w-0 flex-col items-center justify-center rounded-2xl bg-[#D9D9D9] p-2">
                 <a href={slide.link} target="_blank" rel="noreferrer">
                   <Image
                     src={slide.media}

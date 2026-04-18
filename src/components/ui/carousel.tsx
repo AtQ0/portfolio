@@ -5,7 +5,14 @@ import type { KeenSliderOptions } from "keen-slider";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 
 export type CarouselRenderContext = {
   progress: number;
@@ -50,6 +57,14 @@ function getGroup(num: number, groups: Group[]): Group | undefined {
   return groups[0];
 }
 
+function readNumericPerView(
+  slides: KeenSliderOptions["slides"] | undefined,
+): number | undefined {
+  if (!slides || typeof slides !== "object") return undefined;
+  const pv = slides.perView;
+  return typeof pv === "number" && Number.isFinite(pv) ? pv : undefined;
+}
+
 export type CarouselProps<T> = {
   items: T[];
   renderSlide: (
@@ -64,6 +79,8 @@ export type CarouselProps<T> = {
   className?: string;
   classesControls?: string;
   classesSlide?: string;
+  /** Stable key per slide (e.g. row id when items are chunked rows). Defaults to index. */
+  getItemKey?: (item: T, index: number) => string | number;
 };
 
 export function Carousel<T>({
@@ -76,15 +93,28 @@ export function Carousel<T>({
   className = "",
   classesControls = "",
   classesSlide = "",
+  getItemKey,
 }: CarouselProps<T>) {
   const [ready, setReady] = useState(false);
   const [collection, setCollection] = useState(1);
   const [progress, setProgress] = useState(0);
+  const [slidesPerView, setSlidesPerView] = useState(perView);
 
+  const hasBreakpoints = Boolean(extraOptions?.breakpoints);
   const amount = items.length;
+
+  /** When chunking keeps same slide count but changes row composition, re-update Keen. */
+  const itemsLayoutSignature = useMemo(
+    () =>
+      items
+        .map((item, index) => String(getItemKey?.(item, index) ?? index))
+        .join("|"),
+    [items, getItemKey],
+  );
+
   const groups = useMemo(
-    () => computeGroups(amount, perView),
-    [amount, perView],
+    () => computeGroups(amount, slidesPerView),
+    [amount, slidesPerView],
   );
 
   const groupsRef = useRef<Group[]>(groups);
@@ -110,6 +140,9 @@ export function Carousel<T>({
           const details = s.track?.details;
           if (!details) return;
 
+          const pv = readNumericPerView(s.options.slides);
+          if (pv != null) setSlidesPerView(pv);
+
           const p = details.progress;
           if (p != null) setProgress(p);
 
@@ -127,7 +160,12 @@ export function Carousel<T>({
     [],
   );
 
+  // Real DOM ref for ResizeObserver (containerRef is callback ref from Keen).
+  const trackRef = useRef<HTMLUListElement | null>(null);
+
+  // When using breakpoints, Keen owns slides.* — do not overwrite with props.
   useEffect(() => {
+    if (hasBreakpoints) return;
     sliderRef.current?.update({
       defaultAnimation: {
         duration: 2000,
@@ -137,16 +175,31 @@ export function Carousel<T>({
         spacing,
       },
     });
-  }, [perView, spacing, sliderRef]);
+  }, [hasBreakpoints, perView, spacing, sliderRef]);
 
-  useEffect(() => {
+  // After DOM updates, before paint.
+  useLayoutEffect(() => {
     sliderRef.current?.update();
-  }, [amount, sliderRef]);
+  }, [amount, itemsLayoutSignature, sliderRef]);
+
+  // Re-measure whenever the slider container actually resizes.
+  useEffect(() => {
+    const el = trackRef.current;
+    const slider = sliderRef.current;
+    if (!el || !slider) return;
+
+    const ro = new ResizeObserver(() => {
+      slider.update();
+    });
+
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [sliderRef, amount, itemsLayoutSignature]);
 
   return (
     <div
       className={cn(
-        "@container/carousel flex size-full flex-col transition-opacity duration-500 ease-in-out",
+        "@container/carousel flex size-full w-full min-w-0 flex-col transition-opacity duration-500 ease-in-out",
         !ready && "opacity-0",
         className,
       )}
@@ -178,7 +231,7 @@ export function Carousel<T>({
             ))}
           </div>
 
-          <div className="flex items-center justify-end gap-2">
+          <div className="flex translate-x-1.5 items-center justify-end gap-2">
             <button
               type="button"
               className="size-6 shrink-0 cursor-pointer"
@@ -201,13 +254,18 @@ export function Carousel<T>({
       )}
 
       <ul
-        ref={containerRef}
-        className={cn("group/carousel keen-slider h-full overflow-visible!")}
+        ref={(node) => {
+          trackRef.current = node;
+          containerRef(node);
+        }}
+        className={cn(
+          "group/carousel keen-slider h-full w-full min-w-0 overflow-visible!",
+        )}
       >
         {items.map((item, index) => (
           <li
-            key={index}
-            className={cn("keen-slider__slide w-fit", classesSlide)}
+            key={getItemKey?.(item, index) ?? index}
+            className={cn("keen-slider__slide min-w-0", classesSlide)}
           >
             {renderSlide(item, index, { progress })}
           </li>
