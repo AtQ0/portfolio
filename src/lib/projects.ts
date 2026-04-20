@@ -1,4 +1,4 @@
-import type { ProjectItem } from "@/types/storyblok";
+import type { ProjectItem, StoryblokRichText } from "@/types/storyblok";
 import { hasRichTextContent } from "@/lib/storyblokRichText";
 
 export type FallbackProject = {
@@ -52,39 +52,42 @@ export const FALLBACK_PROJECTS = [
   },
 ] as const satisfies readonly FallbackProject[];
 
-export type ResolvedProjectSlide =
-  | {
-      key: string;
-      headline: string;
-      description: string;
-      media: string;
-      link: string;
-    }
-  | {
-      key: string;
-      headline: string;
-      description: string;
-      media: string;
-      link: string;
-    };
+export type ResolvedProjectSlide = {
+  key: string;
+  headline: string;
+  description: string | StoryblokRichText;
+  media: string;
+  link: string;
+};
+
+function getMediaUrl(row: ProjectItem | undefined): string {
+  const filename = row?.media?.filename;
+  return typeof filename === "string" ? filename.trim() : "";
+}
+
+function getLinkUrl(row: ProjectItem | undefined): string {
+  const link = row?.link;
+  if (!link || typeof link !== "object") return "";
+
+  const cached =
+    typeof link.cached_url === "string" ? link.cached_url.trim() : "";
+  const direct = typeof link.url === "string" ? link.url.trim() : "";
+
+  return cached || direct;
+}
 
 function isCompleteCmsProject(
   row: ProjectItem | undefined,
 ): row is ProjectItem & {
-  headline: string;
-  description: string;
-  media: string;
-  link: string;
+  media: NonNullable<ProjectItem["media"]>;
+  link: NonNullable<ProjectItem["link"]>;
 } {
   if (!row?._uid) return false;
-  if (
-    !row.headline?.trim() ||
-    !hasRichTextContent(row.description) ||
-    !row.media?._uid ||
-    !row.link?.trim()
-  )
-    return false;
-  return true;
+
+  const hasMediaUrl = Boolean(getMediaUrl(row));
+  const hasLinkUrl = Boolean(getLinkUrl(row));
+
+  return hasMediaUrl && hasLinkUrl;
 }
 
 export function mergeCmsProjectsWithFallbacks(
@@ -95,12 +98,16 @@ export function mergeCmsProjectsWithFallbacks(
     const row = cms?.[index];
 
     if (isCompleteCmsProject(row)) {
+      const richDescription = hasRichTextContent(row.description)
+        ? row.description
+        : fb.description;
+
       return {
         key: row._uid,
-        headline: row.headline,
-        description: row.description,
-        media: row.media,
-        link: row.link,
+        headline: row.headline?.trim() || fb.headline,
+        description: richDescription,
+        media: getMediaUrl(row),
+        link: getLinkUrl(row),
       };
     }
 

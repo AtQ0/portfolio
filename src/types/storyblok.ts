@@ -139,11 +139,20 @@ export type ProjectsBlock = {
   _uid: string;
 };
 
+export type StoryblokMultilink = {
+  id?: string;
+  url?: string;
+  cached_url?: string;
+  linktype?: "url" | "story" | "asset" | "email";
+  fieldtype?: "multilink";
+  [key: string]: unknown;
+};
+
 export type ProjectItem = {
   headline?: string;
   description?: StoryblokRichText;
   media?: StoryblokAsset;
-  link?: Multilink;
+  link?: StoryblokMultilink;
   _editable?: string;
   _uid: string;
 };

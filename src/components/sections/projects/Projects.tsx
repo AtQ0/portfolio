@@ -63,6 +63,8 @@ export default function Projects({ blok }: ProjectsProps) {
             items={slides}
             controlsPosition="top"
             options={{
+              mode: "free-snap",
+              defaultAnimation: { duration: 850 },
               slides: {
                 perView: 1,
                 spacing: 16,
@@ -80,16 +82,28 @@ export default function Projects({ blok }: ProjectsProps) {
               },
             }}
             renderSlide={(slide) => (
-              <article className="flex h-[418px] w-full min-w-0 flex-col items-center justify-center rounded-2xl bg-[#D9D9D9] p-2">
-                <a href={slide.link} target="_blank" rel="noreferrer">
+              <article className="flex h-[550px] w-full min-w-0 flex-col bg-[#D9D9D9] md:h-[418px]">
+                <a
+                  href={slide.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="relative block min-h-0 flex-1 overflow-hidden rounded-xl"
+                >
                   <Image
                     src={slide.media}
                     alt={slide.headline}
-                    width={100}
-                    height={100}
+                    fill
+                    sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
                   />
                 </a>
-                <a href={slide.link} target="_blank" rel="noreferrer">
+
+                <a
+                  href={slide.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-3 block w-fit"
+                >
                   <h3 className="text-fg-primary text-20 md:text-24">
                     {slide.headline}
                   </h3>
