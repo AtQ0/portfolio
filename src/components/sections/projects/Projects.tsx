@@ -12,7 +12,7 @@ import { getBgClass } from "@/lib/cmsTheme";
 import { StoryblokRichText } from "@storyblok/react";
 import { Carousel } from "@/components/ui/Carousel";
 import Image from "next/image";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 type ProjectsProps = {
   blok: ProjectsBlock;
@@ -36,19 +36,13 @@ as a solo developer or as part of a larger team.`,
   console.log("projects blok: ", blok.projects);
   console.log("slides: ", slides);
 
-  [
-    ...(document.querySelectorAll(
-      'img[data-nimg="fill"]',
-    ) as NodeListOf<HTMLImageElement>),
-  ].map((img, i) => ({
-    i,
-    alt: img.alt,
-    raw: decodeURIComponent(
-      new URL(img.currentSrc || img.src, location.origin).searchParams.get(
-        "url",
-      ) || "",
-    ),
-  }));
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    // safe browser-only debug
+    const imgs = Array.from(document.querySelectorAll('img[data-nimg="fill"]'));
+    console.log("img count", imgs.length);
+  }, []);
 
   const [failedSlides, setFailedSlides] = useState<Record<number, boolean>>({});
 
