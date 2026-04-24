@@ -24,7 +24,7 @@ export const FALLBACK_PROJECTS = [
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
     media: "/images/projects/moviedb.jpg",
-    link: "https://github.com/AtQ0/moviedb",
+    link: "https://github.com/AtQ0/moviedb-react-angular-aspnet",
   },
   {
     id: "fallback-3",
