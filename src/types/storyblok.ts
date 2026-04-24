@@ -167,6 +167,7 @@ export type ProjectItem = {
 export type FaqBlock = {
   background?: "bg-secondary" | "bg-quaternary";
   component: "block_faq";
+  headline?: string;
   questions?: FaqQuestion[];
   _editable?: string;
   _uid: string;

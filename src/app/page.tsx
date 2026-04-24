@@ -1,7 +1,7 @@
 import Hero from "@/components/sections/Hero";
 import Strategy from "@/components/sections/Strategy";
 import BentoGrid from "@/components/sections/bento/BentoGrid";
-import Projects from "@/components/sections/projects/Projects";
+import Projects from "@/components/sections/Projects";
 import Faq from "@/components/sections/Faq";
 import { getStoryblokApi } from "@/lib/storyblok";
 import type {
