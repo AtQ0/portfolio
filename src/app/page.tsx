@@ -22,8 +22,9 @@ import {
 
 export default async function Home() {
   const storyblokApi = getStoryblokApi();
+
   const { data } = await storyblokApi.get("cdn/stories/home", {
-    version: "draft",
+    version: process.env.NODE_ENV === "production" ? "published" : "draft",
   });
 
   const pageContent: PageContent = data.story.content as PageContent;
