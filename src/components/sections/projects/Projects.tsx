@@ -43,10 +43,6 @@ as a solo developer or as part of a larger team.`,
 
   console.log("projects blok: ", blok.projects);
   console.log("slides: ", slides);
-  console.log(
-    "slides media: ",
-    (window as unknown as { __slidesMedia?: string[] }).__slidesMedia,
-  );
 
   const [failedSlides, setFailedSlides] = useState<Record<number, boolean>>({});
 
