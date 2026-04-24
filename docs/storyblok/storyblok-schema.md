@@ -88,7 +88,12 @@ page (Content)
  │             └─ link         → Multilink (field)
  │
  ├─ block_faq (Nestable block)
- │    └─ background          → Single-Option (field)
+ │    ├─ background          → Single-Option (field)
+ │    └─ questions           → Blocks field
+ │         └─ faqQuestion (Nestable block)
+ │              ├─ question  → Text (field)
+ │              └─ answer    → Richtext (field)
+ │
  ├─ block_play (Nestable block)
  │    └─ background          → Single-Option (field)
  └─ block_footer (Nestable block)

@@ -2,6 +2,7 @@ import Hero from "@/components/sections/Hero";
 import Strategy from "@/components/sections/Strategy";
 import BentoGrid from "@/components/sections/bento/BentoGrid";
 import Projects from "@/components/sections/projects/Projects";
+import Faq from "@/components/sections/Faq";
 import { getStoryblokApi } from "@/lib/storyblok";
 import type {
   PageContent,
@@ -9,12 +10,14 @@ import type {
   BentoBlock,
   StrategyBlock,
   ProjectsBlock,
+  FaqBlock,
 } from "@/types/storyblok";
 import {
   isBentoBlock,
   isHeroBlock,
   isStrategyBlock,
   isProjectsBlock,
+  isFaqBlock,
 } from "@/types/storyblok";
 
 export default async function Home() {
@@ -31,6 +34,7 @@ export default async function Home() {
     pageContent.body?.find(isStrategyBlock);
   const projectsBlock: ProjectsBlock | undefined =
     pageContent.body?.find(isProjectsBlock);
+  const faqBlock: FaqBlock | undefined = pageContent.body?.find(isFaqBlock);
 
   // normalized hero cta anchor link to be passed to hero (a) and bento (id) sections for match
   const ctaTarget =
@@ -39,7 +43,8 @@ export default async function Home() {
   //console.log("pageContent", pageContent);
   //console.log("bentoBlock", bentoBlock);
   //console.log("strategyBlock", strategyBlock);
-  console.log("projectsBlock", projectsBlock);
+  //console.log("projectsBlock", projectsBlock);
+  console.log("faqBlock", faqBlock);
 
   return (
     <div>
@@ -52,6 +57,8 @@ export default async function Home() {
       {strategyBlock ? <Strategy blok={strategyBlock} /> : null}
 
       {projectsBlock ? <Projects blok={projectsBlock} /> : null}
+
+      {faqBlock ? <Faq blok={faqBlock} /> : null}
     </div>
   );
 }

@@ -12,43 +12,43 @@ export type FallbackProject = {
 export const FALLBACK_PROJECTS = [
   {
     id: "fallback-1",
-    headline: "Project 1",
+    headline: "Park Ping",
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-    media: "/images/projects/project-1.jpg",
-    link: "https://trailsync.app",
+    media: "/images/projects/parkping.jpg",
+    link: "https://github.com/callepersson-lab/parkping/pull/9",
   },
   {
     id: "fallback-2",
-    headline: "Project 2",
+    headline: "MovieDB",
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-    media: "/images/projects/project-2.jpg",
-    link: "https://northstar-studio.com",
+    media: "/images/projects/moviedb.jpg",
+    link: "https://github.com/AtQ0/moviedb",
   },
   {
     id: "fallback-3",
-    headline: "Project 3",
+    headline: "Book Tracker",
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-    media: "/images/projects/project-3.jpg",
-    link: "https://lumaops.io",
+    media: "/images/projects/booktracker.jpg",
+    link: "https://github.com/AtQ0/book-tracker",
   },
   {
     id: "fallback-4",
-    headline: "Project 4",
+    headline: "15 Puzzle Game",
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-    media: "/images/projects/project-4.jpg",
-    link: "https://fieldnote-cloud.com",
+    media: "/images/projects/gaming.jpg",
+    link: "https://atq0.github.io/15-puzzle-game/",
   },
   {
     id: "fallback-5",
-    headline: "Project 5",
+    headline: "E-commerce",
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-    media: "/images/projects/project-5.jpg",
-    link: "https://harborhq.dev",
+    media: "/images/projects/e-commerce.jpg",
+    link: "https://github.com/AtQ0",
   },
 ] as const satisfies readonly FallbackProject[];
 

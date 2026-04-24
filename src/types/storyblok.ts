@@ -2,7 +2,14 @@ import type { StoryblokRichTextNode as SbRichTextNode } from "@storyblok/react";
 import type { ReactElement } from "react";
 
 export type PageContent = {
-  body?: Array<HeroBlock | BentoBlock | UnknownBlock>;
+  body?: Array<
+    | HeroBlock
+    | BentoBlock
+    | StrategyBlock
+    | ProjectsBlock
+    | FaqBlock
+    | UnknownBlock
+  >;
   component: "page";
   _editable?: string;
   _uid: string;
@@ -122,7 +129,7 @@ export type ClientLogoItem = {
 
 export type StrategyBlock = {
   background?: "bg-secondary" | "bg-quaternary";
-  component: "StrategyBlock";
+  component: "block_strategy";
   headline?: string;
   text?: StoryblokRichText;
   _editable?: string;
@@ -131,7 +138,7 @@ export type StrategyBlock = {
 
 export type ProjectsBlock = {
   background?: "bg-primary" | "bg-tertiary";
-  component: "ProjectsBlock";
+  component: "block_projects";
   headline?: string;
   text?: StoryblokRichText;
   projects?: ProjectItem[];
@@ -155,6 +162,21 @@ export type ProjectItem = {
   link?: StoryblokMultilink;
   _editable?: string;
   _uid: string;
+};
+
+export type FaqBlock = {
+  background?: "bg-secondary" | "bg-quaternary";
+  component: "block_faq";
+  questions?: FaqQuestion[];
+  _editable?: string;
+  _uid: string;
+};
+
+type FaqQuestion = {
+  _uid: string;
+  component: "faqQuestion";
+  question: string;
+  answer: StoryblokRichText;
 };
 
 export type StoryblokRichText = SbRichTextNode<ReactElement>;
@@ -193,3 +215,6 @@ export const isStrategyBlock = (
 export const isProjectsBlock = (
   block: ProjectsBlock | UnknownBlock,
 ): block is ProjectsBlock => block.component === "block_projects";
+
+export const isFaqBlock = (block: FaqBlock | UnknownBlock): block is FaqBlock =>
+  block.component === "block_faq";

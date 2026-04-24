@@ -67,34 +67,34 @@ export default function Projects({ blok }: ProjectsProps) {
               defaultAnimation: { duration: 850 },
               slides: {
                 perView: 1,
-                spacing: 16,
+                spacing: 24,
               },
               breakpoints: {
                 "(min-width: 768px)": {
-                  slides: { perView: 2, spacing: 16 },
+                  slides: { perView: 2, spacing: 24 },
                 },
                 "(min-width: 1024px)": {
-                  slides: { perView: 3, spacing: 16 },
+                  slides: { perView: 3, spacing: 24 },
                 },
                 "(min-width: 1280px)": {
-                  slides: { perView: 4, spacing: 16 },
+                  slides: { perView: 4, spacing: 24 },
                 },
               },
             }}
             renderSlide={(slide) => (
-              <article className="flex h-[550px] w-full min-w-0 flex-col bg-[#D9D9D9] md:h-[418px]">
+              <article className="flex h-[500px] w-full min-w-0 flex-col transition-transform duration-300 ease-out hover:scale-[0.98] md:h-[450px]">
                 <a
                   href={slide.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="relative block min-h-0 flex-1 overflow-hidden rounded-xl"
+                  className="group relative block min-h-0 flex-1 overflow-hidden rounded-md"
                 >
                   <Image
                     src={slide.media}
                     alt={slide.headline}
                     fill
                     sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                    className="object-cover"
+                    className="object-cover opacity-100 transition-opacity duration-300 group-hover:opacity-100"
                   />
                 </a>
 
