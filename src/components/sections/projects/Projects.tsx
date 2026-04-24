@@ -13,7 +13,6 @@ import { StoryblokRichText } from "@storyblok/react";
 import { Carousel } from "@/components/ui/Carousel";
 import Image from "next/image";
 import { useCallback, useMemo, useState } from "react";
-import { useEffect } from "react";
 
 type ProjectsProps = {
   blok: ProjectsBlock;
@@ -34,15 +33,22 @@ as a solo developer or as part of a larger team.`,
     [blok.projects],
   );
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      (window as unknown as { __slidesMedia?: string[] }).__slidesMedia =
-        slides.map((s) => s.media);
-    }
-  }, [slides]);
-
   console.log("projects blok: ", blok.projects);
   console.log("slides: ", slides);
+
+  [
+    ...(document.querySelectorAll(
+      'img[data-nimg="fill"]',
+    ) as NodeListOf<HTMLImageElement>),
+  ].map((img, i) => ({
+    i,
+    alt: img.alt,
+    raw: decodeURIComponent(
+      new URL(img.currentSrc || img.src, location.origin).searchParams.get(
+        "url",
+      ) || "",
+    ),
+  }));
 
   const [failedSlides, setFailedSlides] = useState<Record<number, boolean>>({});
 
