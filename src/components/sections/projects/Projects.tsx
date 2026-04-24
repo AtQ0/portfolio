@@ -12,7 +12,7 @@ import { getBgClass } from "@/lib/cmsTheme";
 import { StoryblokRichText } from "@storyblok/react";
 import { Carousel } from "@/components/ui/Carousel";
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 type ProjectsProps = {
   blok: ProjectsBlock;
@@ -32,17 +32,6 @@ as a solo developer or as part of a larger team.`,
     () => mergeCmsProjectsWithFallbacks(blok.projects, FALLBACK_PROJECTS),
     [blok.projects],
   );
-
-  console.log("projects blok: ", blok.projects);
-  console.log("slides: ", slides);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    // safe browser-only debug
-    const imgs = Array.from(document.querySelectorAll('img[data-nimg="fill"]'));
-    console.log("img count", imgs.length);
-  }, []);
 
   const [failedSlides, setFailedSlides] = useState<Record<number, boolean>>({});
 
