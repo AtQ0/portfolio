@@ -12,26 +12,28 @@ import { getBgClass } from "@/lib/cmsTheme";
 import { StoryblokRichText } from "@storyblok/react";
 import { Carousel } from "@/components/ui/Carousel";
 import Image from "next/image";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 type ProjectsProps = {
   blok: ProjectsBlock;
 };
 
-const FALLBACK_HEADLINE = "Projects";
-const FALLBACK_TEXT = `I’ve been helping brands realize their online potential
-from small and medium sized enterprises to large corporate entities,
-as a solo developer or as part of a larger team.`;
-
 export default function Projects({ blok }: ProjectsProps) {
   const background = blok.background ?? "bg-primary";
-  const headline = blok.headline?.trim() || FALLBACK_HEADLINE;
-  const resolvedText = resolveRichTextOrTextFallback(blok.text, FALLBACK_TEXT);
+  const headline = blok.headline?.trim() || "Projects";
+  const resolvedText = resolveRichTextOrTextFallback(
+    blok.text,
+    `I’ve been helping brands realize their online potential
+from small and medium sized enterprises to large corporate entities,
+as a solo developer or as part of a larger team.`,
+  );
 
   const slides = useMemo(
     () => mergeCmsProjectsWithFallbacks(blok.projects, FALLBACK_PROJECTS),
     [blok.projects],
   );
+
+  const [failedSlides, setFailedSlides] = useState<Record<number, boolean>>({});
 
   const getSlideKey = useCallback(
     (slide: ResolvedProjectSlide) => slide.key,
@@ -55,6 +57,7 @@ export default function Projects({ blok }: ProjectsProps) {
             <p>{resolvedText.text}</p>
           )}
         </div>
+
         <div className="w-full">
           <Carousel
             className="w-full gap-10"
@@ -65,51 +68,55 @@ export default function Projects({ blok }: ProjectsProps) {
             options={{
               mode: "free-snap",
               defaultAnimation: { duration: 850 },
-              slides: {
-                perView: 1,
-                spacing: 24,
-              },
+              slides: { perView: 1, spacing: 24 },
               breakpoints: {
-                "(min-width: 768px)": {
-                  slides: { perView: 2, spacing: 24 },
-                },
-                "(min-width: 1024px)": {
-                  slides: { perView: 3, spacing: 24 },
-                },
-                "(min-width: 1280px)": {
-                  slides: { perView: 4, spacing: 24 },
-                },
+                "(min-width: 768px)": { slides: { perView: 2, spacing: 24 } },
+                "(min-width: 1024px)": { slides: { perView: 3, spacing: 24 } },
+                "(min-width: 1280px)": { slides: { perView: 4, spacing: 24 } },
               },
             }}
-            renderSlide={(slide) => (
-              <article className="flex h-[500px] w-full min-w-0 flex-col transition-transform duration-300 ease-out hover:scale-[0.98] md:h-[450px]">
-                <a
-                  href={slide.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group relative block min-h-0 flex-1 overflow-hidden rounded-md"
-                >
-                  <Image
-                    src={slide.media}
-                    alt={slide.headline}
-                    fill
-                    sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                    className="object-cover opacity-100 transition-opacity duration-300 group-hover:opacity-100"
-                  />
-                </a>
+            renderSlide={(slide, index) => {
+              const fallbackMedia =
+                FALLBACK_PROJECTS[index]?.media ?? FALLBACK_PROJECTS[0].media;
+              const imageSrc = failedSlides[index]
+                ? fallbackMedia
+                : slide.media;
 
-                <a
-                  href={slide.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-3 block w-fit"
-                >
-                  <h3 className="text-fg-primary text-20 md:text-24">
-                    {slide.headline}
-                  </h3>
-                </a>
-              </article>
-            )}
+              return (
+                <article className="flex h-[500px] w-full min-w-0 flex-col transition-transform duration-300 ease-out hover:scale-[0.98] md:h-[450px]">
+                  <a
+                    href={slide.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group relative block min-h-0 flex-1 overflow-hidden rounded-md"
+                  >
+                    <Image
+                      src={imageSrc}
+                      alt={slide.headline}
+                      fill
+                      sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover opacity-100 transition-opacity duration-300 group-hover:opacity-100"
+                      onError={() =>
+                        setFailedSlides((prev) =>
+                          prev[index] ? prev : { ...prev, [index]: true },
+                        )
+                      }
+                    />
+                  </a>
+
+                  <a
+                    href={slide.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-3 block w-fit"
+                  >
+                    <h3 className="text-fg-primary text-20 md:text-24">
+                      {slide.headline}
+                    </h3>
+                  </a>
+                </article>
+              );
+            }}
           />
         </div>
       </div>
