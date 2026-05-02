@@ -1,3 +1,7 @@
+"use client";
+
+import { isValidElement, useState, type ReactNode } from "react";
+
 import { getBgClass } from "@/lib/cmsTheme";
 import { hasRichTextContent } from "@/lib/storyblokRichText";
 import { cn } from "@/lib/utils";
@@ -8,14 +12,14 @@ const FALLBACK_HEADLINE = "Frequently Asked Questions";
 
 type FallbackFaqQuestion = {
   question: string;
-  answer: string;
+  answer: string | ReactNode;
 };
 
 const FALLBACK_QUESTIONS: FallbackFaqQuestion[] = [
   {
     question: "What projects do you work on?",
     answer: `
-ERverything from marketing sites and product landing pages to fully custom web apps. Whether you're a startup or a large organisation, I deliver fast, accessible, bespoke digital experiences using modern frontend technologies.
+Everything from marketing sites and product landing pages to fully custom web apps. Whether you're a startup or a large organisation, I deliver fast, accessible, bespoke digital experiences using modern frontend technologies.
 
 I also work within existing development and design teams, remotely or on-site, for web-related projects.
 `,
@@ -23,8 +27,7 @@ I also work within existing development and design teams, remotely or on-site, f
   {
     question: "Do you work remotely or on-site?",
     answer: `
-I primarily work remotely from my studio in Gothenburg, but I'm happy to attend meetings at your office when needed or collaborate as part of a larger team.
-`,
+I primarily work remotely from my studio in Gothenburg, but I'm happy to attend meetings at your office when needed or collaborate as part of a larger team.`,
   },
   {
     question: "What tech stack and tools do you use?",
@@ -48,18 +51,27 @@ This portfolio is only a fraction of all the work I've done. Most projects can't
   },
   {
     question: "How can I start a new project?",
-    answer: `
-If you'd like to collaborate, you can message me at mail@atkobabic.com with as much detail about your project as possible (timeframes/deadlines, budget, and scope). The more detail, the better!
-
-If everything looks good, we can arrange a call and take it from there.
-`,
+    answer: (
+      <div className="space-y-4">
+        <p>
+          If you&apos;d like to collaborate, you can message me at{" "}
+          <a href="mailto:mail@atkobabic.com">mail@atkobabic.com</a> with as
+          much detail about your project as possible (timeframes/deadlines,
+          budget, and scope). The more detail, the better!
+        </p>
+        <p>
+          If everything looks good, we can arrange a call and take it from
+          there.
+        </p>
+      </div>
+    ),
   },
 ];
 
 type RenderFaqQuestion = {
   key: string;
   question: string;
-  answer: string | StoryblokRichText;
+  answer: StoryblokRichText | string | ReactNode;
 };
 
 function renderFallbackAnswer(answer: string) {
@@ -78,9 +90,35 @@ function renderFallbackAnswer(answer: string) {
   );
 }
 
+function renderResolvedAnswer(answer: StoryblokRichText | string | ReactNode) {
+  if (typeof answer === "string") {
+    return renderFallbackAnswer(answer);
+  }
+
+  if (isValidElement(answer)) {
+    return answer;
+  }
+
+  if (
+    answer !== null &&
+    typeof answer === "object" &&
+    hasRichTextContent(answer as StoryblokRichText)
+  ) {
+    return (
+      <div className="[&_p+p]:mt-4">
+        <SbRichText doc={answer as StoryblokRichText} />
+      </div>
+    );
+  }
+
+  return <>{answer}</>;
+}
+
 export default function Faq({ blok }: { blok: FaqBlock }) {
   const background = blok.background ?? "bg-secondary";
   const headline = blok.headline?.trim() || FALLBACK_HEADLINE;
+
+  const [openKey, setOpenKey] = useState<string | null>(null);
 
   const questions: RenderFaqQuestion[] = FALLBACK_QUESTIONS.map((fb, index) => {
     const cms = blok.questions?.[index];
@@ -99,30 +137,64 @@ export default function Faq({ blok }: { blok: FaqBlock }) {
   return (
     <section
       className={cn(
-        "px-gutter py-gutter-xl flex flex-col gap-10",
+        "px-gutter py-gutter-xl",
         getBgClass(background, "bg-secondary"),
-        "bg-blue-400",
       )}
     >
-      <div className="bg-red-300">
-        <div className="mx-auto w-full md:max-w-153.75">
-          <h2 className="text-fg-secondary text-18">{headline}</h2>
+      <div className="mx-auto flex w-full flex-col gap-4 md:max-w-153.75">
+        <h2 className="text-fg-secondary text-18">{headline}</h2>
 
-          <div className="flex flex-col gap-4">
-            {questions.map((question) => (
-              <div key={question.key}>
-                <h3>{question.question}</h3>
-                {typeof question.answer === "string" ? (
-                  renderFallbackAnswer(question.answer)
-                ) : (
-                  <div className="text-fg-secondary text-18 bg-pink-300 [&_p+p]:mt-4">
-                    <SbRichText doc={question.answer} />
+        <ul className="faq-list flex list-none flex-col gap-4 p-0">
+          {questions.map((question, index) => {
+            const isOpen = openKey === question.key;
+            const panelId = `faq-panel-${question.key}`;
+
+            return (
+              <li
+                key={question.key}
+                className="transition-opacity duration-200 motion-reduce:transition-none [.faq-list:hover:has(>_li:hover)>_li:not(:hover)]:opacity-35"
+              >
+                <button
+                  type="button"
+                  id={`faq-trigger-${question.key}`}
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() =>
+                    setOpenKey((k) =>
+                      k === question.key ? null : question.key,
+                    )
+                  }
+                  className="text-20 md:text-24 grid w-full cursor-pointer grid-cols-[44px_minmax(0,1fr)] text-left"
+                >
+                  <span className="tabular-nums">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-balance">{question.question}</span>
+                </button>
+
+                <div
+                  className={cn(
+                    "grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none",
+                    isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+                  )}
+                  aria-hidden={!isOpen}
+                >
+                  <div className="min-h-0 overflow-hidden">
+                    <div
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={`faq-trigger-${question.key}`}
+                      className="richtext-links text-fg-secondary text-18 border-t-transparent px-[44px] pt-4"
+                      inert={!isOpen ? true : undefined}
+                    >
+                      {renderResolvedAnswer(question.answer)}
+                    </div>
                   </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

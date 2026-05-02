@@ -45,7 +45,7 @@ export default async function Home() {
   //console.log("bentoBlock", bentoBlock);
   //console.log("strategyBlock", strategyBlock);
   //console.log("projectsBlock", projectsBlock);
-  console.log("faqBlock", faqBlock);
+  //console.log("faqBlock", faqBlock);
 
   return (
     <div>
